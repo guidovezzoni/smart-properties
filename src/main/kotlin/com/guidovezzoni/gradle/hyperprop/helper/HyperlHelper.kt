@@ -28,28 +28,27 @@ class HyperlHelper {
 
     private fun addResources(project: Project, properties: Properties) {
         println("\n***** Hyper Properties found")
-        properties.forEach() { key, value ->
+        properties.forEach { propKey, propValue ->
+            val keyString = propKey.toString()
+            val valueString = propValue.toString()
+
             val android = project.extensions.findByName("android") as AppExtension
 
-            val cleansedPropertyName: String = key.toString().cleanTokensUp()
-
-            val finalValue: String = value.toString() //getBambooOrEnvOrDefault(cleansedPropertyName, propertyValue)
+            val finalValue = valueString //getBambooOrEnvOrDefault(cleansedPropertyName, propertyValue)
             val escapedValue = finalValue.doubleQuoted()
 
-            println("* cleansedPropertyName=$cleansedPropertyName finalValue=$finalValue")
+            println("* PropertyName=$keyString  *  finalValue=$finalValue")
 
-//            if (key.toString().isBuildConfigProperty()) {
-//                android.defaultConfig.buildConfigField(cleansedPropertyName, escapedValue)
-//            }
-            android.defaultConfig.buildConfigFieldStringIfRequested(key.toString(), escapedValue)
+            android.defaultConfig.buildConfigFieldStringIfRequested(keyString, escapedValue)
+            android.defaultConfig.resValueStringIfRequired(keyString, escapedValue)
 
+            if (keyString.isProjectExtProperty()) {
+                project.extensions.extraProperties.set(keyString.cleanTokensUp(),finalValue)
+            }
 
-//            if (key.toString().isResourcesProperty()) {
-//                android.defaultConfig.resValue("string", "BINARY_$cleansedPropertyName", escapedValue)
-//            }
-            android.defaultConfig.resValueStringIfRequired(key.toString(), escapedValue)
+            if (keyString.isRootProjectExtProperty()) {
+                project.rootProject.extensions.extraProperties.set(keyString.cleanTokensUp(),finalValue)
+            }
         }
     }
-
-
 }

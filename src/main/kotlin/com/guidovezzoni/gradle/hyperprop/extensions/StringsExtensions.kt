@@ -2,6 +2,8 @@ package com.guidovezzoni.gradle.hyperprop.extensions
 
 const val BUILDCONFIG_TOKEN = ".BuildConfig"
 const val RESOURCES_TOKEN = ".Resources"
+const val PROJECT_EXT_TOKEN = ".ProjectExt"
+const val ROOT_PROJ_EXT_TOKEN = ".RootProjExt"
 const val DOUBLE_QUOTE = "\""
 
 fun String.isBuildConfigProperty(): Boolean {
@@ -10,6 +12,14 @@ fun String.isBuildConfigProperty(): Boolean {
 
 fun String.isResourcesProperty(): Boolean {
     return contains(RESOURCES_TOKEN)
+}
+
+fun String.isProjectExtProperty(): Boolean {
+    return contains(PROJECT_EXT_TOKEN)
+}
+
+fun String.isRootProjectExtProperty(): Boolean {
+    return contains(ROOT_PROJ_EXT_TOKEN)
 }
 
 fun String.doubleQuoted(): String {
@@ -27,5 +37,6 @@ fun String.hasUnknownTokens():Boolean {
 fun String.cleanTokensUp(): String {
     return this.replace(BUILDCONFIG_TOKEN, "")
         .replace(RESOURCES_TOKEN, "")
+        .replace(PROJECT_EXT_TOKEN, "")
+        .replace(ROOT_PROJ_EXT_TOKEN, "")
 }
-

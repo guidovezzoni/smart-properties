@@ -8,10 +8,9 @@ Manage build parameters from a *.property file or an environment variables
 * fabric https://github.com/plastiv/CrashlyticsDemo/
 * environment variables
 * support gradle ext
+* support flavours
 
 ## Minor features
 * logger
-* unit test
+* unit test https://guides.gradle.org/testing-gradle-plugins/
 * uppercase/underscores for buildconfig
-
- 
