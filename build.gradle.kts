@@ -28,13 +28,13 @@ configure<JavaPluginConvention> {
 
 gradlePlugin {
     plugins {
-        create("resproPlugin") {
-            id = "com.guidovezzoni.gradle"
-            group = "com.guidovezzoni.gradle"
+        create("resourcefulPropertiesPlugin") {
+            id = "com.guidovezzoni.respro"
+            group = "com.guidovezzoni.respro"
             version = "0.1.0"
             displayName = "Resourceful Plugin"
             description = "Manage build parameters from a *.property file or an environment variables"
-            implementationClass = "com.guidovezzoni.gradle.resourcefulproperties.gradle.ResproPlugin"
+            implementationClass = "com.guidovezzoni.gradle.respro.gradle.ResproPlugin"
         }
     }
 }
