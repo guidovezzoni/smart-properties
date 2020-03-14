@@ -1,4 +1,4 @@
-package com.guidovezzoni.gradle.respro.model
+package com.guidovezzoni.gradle.hyperprop.model
 
 import java.io.File
 

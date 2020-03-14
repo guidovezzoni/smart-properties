@@ -1,18 +1,18 @@
-package com.guidovezzoni.gradle.respro.helper
+package com.guidovezzoni.gradle.hyperprop.helper
 
 import com.android.build.gradle.AppExtension
-import com.guidovezzoni.gradle.respro.extensions.*
-import com.guidovezzoni.gradle.respro.gradle.ResproExtension
+import com.guidovezzoni.gradle.hyperprop.extensions.*
+import com.guidovezzoni.gradle.hyperprop.gradle.HyperpropExtension
 import org.gradle.api.Project
 import java.util.*
 
-class ResourcefulHelper {
+class HyperlHelper {
     private val entries = Properties()
-    private lateinit var configExtension: ResproExtension
+    private lateinit var configExtension: HyperpropExtension
 
 
     fun configure(project: Project) {
-        configExtension = project.extensions.getByType(ResproExtension::class.java)
+        configExtension = project.extensions.getByType(HyperpropExtension::class.java)
         val extensionConfigModel = configExtension.toConfigModel()
 //        System.out.printf("%s, %s!\n", extensionConfigModel.message, extensionConfigModel.recipient)
 
@@ -27,7 +27,7 @@ class ResourcefulHelper {
 
 
     private fun addResources(project: Project, properties: Properties) {
-        println("\n***** Resourceful Property found")
+        println("\n***** Hyper Properties found")
         properties.forEach() { key, value ->
             val android = project.extensions.findByName("android") as AppExtension
 

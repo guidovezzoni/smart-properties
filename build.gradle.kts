@@ -28,13 +28,13 @@ configure<JavaPluginConvention> {
 
 gradlePlugin {
     plugins {
-        create("resourcefulPropertiesPlugin") {
-            id = "com.guidovezzoni.respro"
-            group = "com.guidovezzoni.respro"
-            version = "0.1.0"
-            displayName = "Resourceful Plugin"
+        create("hyperPropertiesPlugin") {
+            id = "com.guidovezzoni.hyperprop"
+            group = "com.guidovezzoni.hyperprop"
+            version = "0.1.1"
+            displayName = "Hyper Properties Plugin"
             description = "Manage build parameters from a *.property file or an environment variables"
-            implementationClass = "com.guidovezzoni.gradle.respro.gradle.ResproPlugin"
+            implementationClass = "com.guidovezzoni.gradle.hyperprop.gradle.HyperpropPlugin"
         }
     }
 }

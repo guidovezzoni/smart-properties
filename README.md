@@ -1,4 +1,4 @@
-# resourceful-properties
+# HyperProperties Plugin
 Manage build parameters from a *.property file or an environment variables
 
 

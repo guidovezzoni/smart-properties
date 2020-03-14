@@ -1,19 +1,19 @@
-package com.guidovezzoni.gradle.respro.gradle
+package com.guidovezzoni.gradle.hyperprop.gradle
 
 import com.android.build.gradle.AppExtension
-import com.guidovezzoni.gradle.respro.helper.ResourcefulHelper
+import com.guidovezzoni.gradle.hyperprop.helper.HyperlHelper
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
-class ResproPlugin : Plugin<Project> {
-    private val resourcefulHelper = ResourcefulHelper()
+class HyperpropPlugin : Plugin<Project> {
+    private val hyperlHelper = HyperlHelper()
 
     override fun apply(project: Project) {
-        project.extensions.create(EXTENSION_NAME, ResproExtension::class.java)
+        project.extensions.create(EXTENSION_NAME, HyperpropExtension::class.java)
 
         checkAndroidVariant(project)
 
-        project.afterEvaluate { proj -> resourcefulHelper.configure(proj) }
+        project.afterEvaluate { proj -> hyperlHelper.configure(proj) }
     }
 
     private fun checkAndroidVariant(project: Project) {
@@ -25,7 +25,7 @@ class ResproPlugin : Plugin<Project> {
     }
 
     companion object {
-        const val EXTENSION_NAME = "resourcefulPropertiesPlugin"
+        const val EXTENSION_NAME = "hyperPropertiesPlugin"
 //        const val TASK_NAME = "hello"
     }
 }

@@ -1,1 +1,1 @@
-rootProject.name = "resourceful-properties"
+rootProject.name = "hyper-properties"
