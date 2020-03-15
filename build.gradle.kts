@@ -31,7 +31,7 @@ gradlePlugin {
         create("hyperPropertiesPlugin") {
             id = "com.guidovezzoni.hyperprop"
             group = "com.guidovezzoni.hyperprop"
-            version = "0.1.1"
+            version = "0.2.0-beta"
             displayName = "Hyper Properties Plugin"
             description = "Manage build parameters from a *.property file or an environment variables"
             implementationClass = "com.guidovezzoni.gradle.hyperprop.gradle.HyperpropPlugin"
@@ -40,7 +40,7 @@ gradlePlugin {
 }
 
 pluginBundle {
-    website = "https://github.com/com.guidovezzoni/xxx"
-    vcsUrl = "https://github.com/com.guidovezzoni/xxx.git"
-    tags = listOf("properties", "environment variables", "android")
+    website = "https://github.com/guidovezzoni/hyper-properties"
+    vcsUrl = "https://github.com/guidovezzoni/hyper-properties.git"
+    tags = listOf("properties", "environment variables", "android", "buildconfig", "resources")
 }
