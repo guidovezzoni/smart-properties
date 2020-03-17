@@ -11,7 +11,7 @@ plugins {
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle:3.6.0")
+    implementation("com.android.tools.build:gradle:3.6.1")
 
 //    testCompile("junit", "junit", "4.12")
 }
@@ -31,7 +31,7 @@ gradlePlugin {
         create("hyperPropertiesPlugin") {
             id = "com.guidovezzoni.hyperprop"
             group = "com.guidovezzoni.hyperprop"
-            version = "0.2.0-beta"
+            version = "0.2.1-beta"
             displayName = "Hyper Properties Plugin"
             description = "Manage build parameters from a *.property file or an environment variables"
             implementationClass = "com.guidovezzoni.gradle.hyperprop.gradle.HyperpropPlugin"

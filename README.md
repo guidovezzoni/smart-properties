@@ -50,8 +50,18 @@ public final class BuildConfig {
        }
    ```
 
+Additionally, any of the above properties can be easily overridden by defining two types of environment variables:
+* [propertyName]=[new value] -  this can simply be defined on any machine 
+* [prefix_propertyName]=[new value] - same as above, the prefix is a general parameter, this is typically used on CI integration
+
+Setting up appropriately `prefix`, the property can be overridden on local machines or CI.
+
+Please note: the prefixed variable always has a higher priority.
+
 
 # Usage
+
+## Setup
 Add the plugin to your root project using the new plugin DSL:
 ```groovy
 plugins {
@@ -83,12 +93,22 @@ apply plugin: 'com.guidovezzoni.hyperprop'
 
 **PLEASE NOTE**: Android flavours are not supported yet
 
+## Configuration
+
+Here are the available settings:
+
+```groovy
+    hyperPropertiesPlugin {
+        sourceFile = file("$rootDir/external.properties")
+        ciEnvironmentPrefix = "build_"
+    }
+```
 
 
-# Future Feature List
+# Enhancement List
 
 ## Major features
-* environment variables
+* ~~environment variables~~
 * ~~support gradle ext~~
 * support flavours
 * fabric https://github.com/plastiv/CrashlyticsDemo/
@@ -102,12 +122,13 @@ apply plugin: 'com.guidovezzoni.hyperprop'
 
 | Version     | Date       | Issues        | Notes                                      |
 |:------------|:-----------|:--------------|:-------------------------------------------|
-| 0.2.0_bets  | 15/03/2020 |               | First beta release                        |
+| 0.2.0_beta  | 15/03/2020 |               | First beta release                         |
+| 0.2.1_beta  | 17/03/2020 |               | env var support                            |
 
 
 # Licence
 ```
-   Copyright 2019 Guido Vezzoni
+   Copyright 2020 Guido Vezzoni
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
