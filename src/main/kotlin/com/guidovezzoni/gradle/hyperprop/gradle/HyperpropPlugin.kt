@@ -2,11 +2,13 @@ package com.guidovezzoni.gradle.hyperprop.gradle
 
 import com.android.build.gradle.AppExtension
 import com.guidovezzoni.gradle.hyperprop.helper.HyperlHelper
+import com.guidovezzoni.gradle.hyperprop.logger.CustomLogging
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
 class HyperpropPlugin : Plugin<Project> {
     private val hyperlHelper = HyperlHelper()
+    private val logger = CustomLogging.getLogger(HyperpropPlugin::class.java)
 
     override fun apply(project: Project) {
         project.extensions.create(EXTENSION_NAME, HyperpropExtension::class.java)
@@ -18,14 +20,13 @@ class HyperpropPlugin : Plugin<Project> {
 
     private fun checkAndroidVariant(project: Project) {
         val android = project.extensions.findByName("android") as AppExtension
-        println("\n**** Available variants ****")
+        logger.debug("\n**** Available variants ****")
         android.applicationVariants.whenObjectAdded { appVariant ->
-            println("* ${appVariant.name}")
+            logger.debug("* ${appVariant.name}")
         }
     }
 
     companion object {
         const val EXTENSION_NAME = "hyperPropertiesPlugin"
-//        const val TASK_NAME = "hello"
     }
 }

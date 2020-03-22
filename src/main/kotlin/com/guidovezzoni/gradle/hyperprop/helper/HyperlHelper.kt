@@ -3,11 +3,13 @@ package com.guidovezzoni.gradle.hyperprop.helper
 import com.android.build.gradle.AppExtension
 import com.guidovezzoni.gradle.hyperprop.extensions.*
 import com.guidovezzoni.gradle.hyperprop.gradle.HyperpropExtension
+import com.guidovezzoni.gradle.hyperprop.logger.CustomLogging
 import com.guidovezzoni.gradle.hyperprop.model.ConfigModel
 import org.gradle.api.Project
 import java.util.*
 
 class HyperlHelper {
+    private val logger = CustomLogging.getLogger(HyperlHelper::class.java)
     private val entries = Properties()
     private lateinit var configExtension: HyperpropExtension
     private lateinit var extensionConfigModel: ConfigModel
@@ -21,7 +23,7 @@ class HyperlHelper {
         if (!extensionConfigModel.sourceFile.exists()) {
             throw IllegalArgumentException("No valid file for parameter sourceFile - ${extensionConfigModel.sourceFile.absoluteFile} not found")
         }
-        println("\n***** Loading config file ${extensionConfigModel.sourceFile.absoluteFile}")
+        logger.debug("\n***** Loading config file ${extensionConfigModel.sourceFile.absoluteFile}")
         entries.load(extensionConfigModel.sourceFile.reader())
 
         addResources(project, entries)
@@ -41,7 +43,7 @@ class HyperlHelper {
     }
 
     private fun addResources(project: Project, properties: Properties) {
-        println("\n***** Hyper Properties found")
+        logger.debug("\n***** Hyper Properties found")
         properties.forEach { propKey, propValue ->
             val keyString = propKey.toString()
             val valueString = propValue.toString()
@@ -51,7 +53,7 @@ class HyperlHelper {
             val finalValue = getEnvVar(keyString.cleanTokensUp()) ?: valueString
             val escapedValue = finalValue.doubleQuoted()
 
-            println("* PropertyName=$keyString  *  finalValue=$finalValue")
+            logger.debug("* PropertyName=$keyString  *  finalValue=$finalValue")
 
             android.defaultConfig.buildConfigFieldStringIfRequested(keyString, escapedValue)
             android.defaultConfig.resValueStringIfRequired(keyString, escapedValue)
