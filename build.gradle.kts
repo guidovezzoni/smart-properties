@@ -28,19 +28,19 @@ configure<JavaPluginConvention> {
 
 gradlePlugin {
     plugins {
-        create("hyperPropertiesPlugin") {
-            id = "com.guidovezzoni.hyperprop"
-            group = "com.guidovezzoni.hyperprop"
+        create("smartPropertiesPlugin") {
+            id = "com.guidovezzoni.smartproperties"
+            group = "com.guidovezzoni.smartproperties"
             version = "0.2.1-beta"
-            displayName = "Hyper Properties Plugin"
-            description = "Manage build parameters from a *.property file or an environment variables"
-            implementationClass = "com.guidovezzoni.gradle.hyperprop.gradle.HyperpropPlugin"
+            displayName = "Smart Properties Plugin"
+            description = "Manage build parameters from a *.property file or environment variables"
+            implementationClass = "com.guidovezzoni.gradle.smartproperties.gradle.SmartPropertiesPlugin"
         }
     }
 }
 
 pluginBundle {
-    website = "https://github.com/guidovezzoni/hyper-properties"
-    vcsUrl = "https://github.com/guidovezzoni/hyper-properties.git"
+    website = "https://github.com/guidovezzoni/smart-properties"
+    vcsUrl = "https://github.com/guidovezzoni/smart-properties.git"
     tags = listOf("properties", "environment variables", "android", "buildconfig", "resources")
 }

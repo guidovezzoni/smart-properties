@@ -1,4 +1,4 @@
-# HyperProperties Plugin
+# SmartPropertiesPlugin
 Manage build parameters from a *.property file or an environment variables
 
 The purpose of this library is to handle build parameters via a specific formatting of a `.properties` file.
@@ -12,7 +12,7 @@ Features:
   
   
 # Example
-Given this sample file `hyper.properties` in the root folder of the project:
+Given this sample file `smart.properties` in the root folder of the project:
 ```groovy
 property01.BuildConfig=prop01
 property02.Resources=prop02
@@ -65,7 +65,7 @@ Please note: the prefixed variable always has a higher priority.
 Add the plugin to your root project using the new plugin DSL:
 ```groovy
 plugins {
-  id "com.guidovezzoni.hyperprop" version "0.2.0-beta"
+  id "com.guidovezzoni.smartproperties" version "0.2.0-beta"
 }
 ```
 or the leagacy plugin application:
@@ -77,18 +77,13 @@ buildscript {
     }
   }
   dependencies {
-    classpath "gradle.plugin.com.guidovezzoni.hyperprop:hyper-properties:0.2.0-beta"
+    classpath "gradle.plugin.com.guidovezzoni.smartproperties:smart-properties:0.2.0-beta"
   }
 }
 ```
 Load the plugin in your `app` subproject and configure it
 ```groovy
-apply plugin: 'com.guidovezzoni.hyperprop'
-
-
-    hyperPropertiesPlugin {
-        sourceFile = file("$rootDir/external.properties")
-    }
+apply plugin: 'com.guidovezzoni.smartproperties'
 ```
 
 **PLEASE NOTE**: Android flavours are not supported yet
@@ -98,7 +93,7 @@ apply plugin: 'com.guidovezzoni.hyperprop'
 Here are the available settings:
 
 ```groovy
-    hyperPropertiesPlugin {
+    smartPropertiesPlugin {
         sourceFile = file("$rootDir/external.properties")
         ciEnvironmentPrefix = "build_"
     }

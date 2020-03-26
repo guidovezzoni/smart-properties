@@ -1,4 +1,4 @@
-package com.guidovezzoni.gradle.hyperprop.extensions
+package com.guidovezzoni.gradle.smartproperties.extensions
 
 const val BUILDCONFIG_TOKEN = ".BuildConfig"
 const val RESOURCES_TOKEN = ".Resources"

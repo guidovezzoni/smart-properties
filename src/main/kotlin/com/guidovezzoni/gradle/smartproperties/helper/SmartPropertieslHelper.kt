@@ -1,24 +1,23 @@
-package com.guidovezzoni.gradle.hyperprop.helper
+package com.guidovezzoni.gradle.smartproperties.helper
 
 import com.android.build.gradle.AppExtension
-import com.guidovezzoni.gradle.hyperprop.extensions.*
-import com.guidovezzoni.gradle.hyperprop.gradle.HyperpropExtension
-import com.guidovezzoni.gradle.hyperprop.logger.CustomLogging
-import com.guidovezzoni.gradle.hyperprop.model.ConfigModel
+import com.guidovezzoni.gradle.smartproperties.extensions.*
+import com.guidovezzoni.gradle.smartproperties.gradle.SmartPropertiesExtension
+import com.guidovezzoni.gradle.smartproperties.logger.CustomLogging
+import com.guidovezzoni.gradle.smartproperties.model.ConfigModel
 import org.gradle.api.Project
 import java.util.*
 
-class HyperlHelper {
-    private val logger = CustomLogging.getLogger(HyperlHelper::class.java)
+class SmartPropertieslHelper {
+    private val logger = CustomLogging.getLogger(SmartPropertieslHelper::class.java)
     private val entries = Properties()
-    private lateinit var configExtension: HyperpropExtension
+    private lateinit var configExtension: SmartPropertiesExtension
     private lateinit var extensionConfigModel: ConfigModel
 
 
     fun configure(project: Project) {
-        configExtension = project.extensions.getByType(HyperpropExtension::class.java)
+        configExtension = project.extensions.getByType(SmartPropertiesExtension::class.java)
         extensionConfigModel = configExtension.toConfigModel()
-//        System.out.printf("%s, %s!\n", extensionConfigModel.message, extensionConfigModel.recipient)
 
         if (!extensionConfigModel.sourceFile.exists()) {
             throw IllegalArgumentException("No valid file for parameter sourceFile - ${extensionConfigModel.sourceFile.absoluteFile} not found")
@@ -43,7 +42,7 @@ class HyperlHelper {
     }
 
     private fun addResources(project: Project, properties: Properties) {
-        logger.debug("\n***** Hyper Properties found")
+        logger.debug("\n***** Smart Properties found")
         properties.forEach { propKey, propValue ->
             val keyString = propKey.toString()
             val valueString = propValue.toString()

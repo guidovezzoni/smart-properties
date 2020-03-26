@@ -1,4 +1,4 @@
-package com.guidovezzoni.gradle.hyperprop.logger
+package com.guidovezzoni.gradle.smartproperties.logger
 
 import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging

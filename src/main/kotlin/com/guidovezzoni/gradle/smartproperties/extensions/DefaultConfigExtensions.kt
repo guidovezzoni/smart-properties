@@ -1,4 +1,4 @@
-package com.guidovezzoni.gradle.hyperprop.extensions
+package com.guidovezzoni.gradle.smartproperties.extensions
 
 import com.android.annotations.NonNull
 import com.android.build.gradle.internal.dsl.BaseFlavor

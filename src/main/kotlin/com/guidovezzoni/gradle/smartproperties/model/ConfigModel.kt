@@ -1,4 +1,4 @@
-package com.guidovezzoni.gradle.hyperprop.model
+package com.guidovezzoni.gradle.smartproperties.model
 
 import java.io.File
 

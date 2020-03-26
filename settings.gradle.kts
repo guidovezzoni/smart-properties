@@ -1,1 +1,1 @@
-rootProject.name = "hyper-properties"
+rootProject.name = "smart-properties"

@@ -1,14 +1,14 @@
-package com.guidovezzoni.gradle.hyperprop.gradle
+package com.guidovezzoni.gradle.smartproperties.gradle
 
 import java.io.File
 
-open class HyperpropExtension(
+open class SmartPropertiesExtension(
     var sourceFile: File = File(DEFAULT_FILENAME),
     var ciEnvironmentPrefix: String = DEFAULT_CI_ENV_PREFIX
 ) {
 
     companion object {
-        const val DEFAULT_FILENAME = "hyper.properties"
+        const val DEFAULT_FILENAME = "smart.properties"
         const val DEFAULT_CI_ENV_PREFIX = ""
     }
 }
