@@ -65,7 +65,7 @@ Please note: the prefixed variable always has a higher priority.
 Add the plugin to your root project using the new plugin DSL:
 ```groovy
 plugins {
-  id "com.guidovezzoni.smartproperties" version "0.2.0-beta"
+  id "com.guidovezzoni.smartproperties" version "0.3.0-beta"
 }
 ```
 or the leagacy plugin application:
@@ -77,7 +77,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "gradle.plugin.com.guidovezzoni.smartproperties:smart-properties:0.2.0-beta"
+    classpath "gradle.plugin.com.guidovezzoni.smartproperties:smart-properties:0.3.0-beta"
   }
 }
 ```
@@ -118,7 +118,7 @@ Here are the available settings:
 | Version     | Date       | Issues        | Notes                                      |
 |:------------|:-----------|:--------------|:-------------------------------------------|
 | 0.2.0_beta  | 15/03/2020 |               | First beta release                         |
-| 0.2.1_beta  | 17/03/2020 |               | env var support                            |
+| 0.3.0_beta  | 28/03/2020 |               | env var support, Project renamed           |
 
 
 # Licence
