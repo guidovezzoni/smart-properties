@@ -6,7 +6,7 @@ repositories {
 plugins {
     kotlin("jvm") version "1.3.70"
     id("java-gradle-plugin")
-    id("com.gradle.plugin-publish") version "0.10.1"
+    id("com.gradle.plugin-publish") version "0.11.0"
     `maven-publish`
 }
 
@@ -31,8 +31,10 @@ gradlePlugin {
         create("smartPropertiesPlugin") {
             id = "com.guidovezzoni.smartproperties"
             group = "com.guidovezzoni.smartproperties"
-            version = "0.2.1-beta"
+            version = "0.3.0-beta"
+            @Suppress("UnstableApiUsage")
             displayName = "Smart Properties Plugin"
+            @Suppress("UnstableApiUsage")
             description = "Manage build parameters from a *.property file or environment variables"
             implementationClass = "com.guidovezzoni.gradle.smartproperties.gradle.SmartPropertiesPlugin"
         }
