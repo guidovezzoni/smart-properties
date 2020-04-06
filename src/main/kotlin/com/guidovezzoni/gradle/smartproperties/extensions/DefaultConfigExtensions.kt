@@ -14,6 +14,7 @@ fun BaseFlavor.buildConfigFieldString(@NonNull name: String, @NonNull value: Str
 fun BaseFlavor.buildConfigFieldStringIfRequested(@NonNull propertyName: String, @NonNull value: String) {
     if (propertyName.isBuildConfigProperty()) {
         buildConfigFieldString(propertyName.cleanTokensUp(), value)
+        println("BUILDCONFIG: ${propertyName.cleanTokensUp()}=$value")
     }
 }
 
@@ -24,6 +25,7 @@ fun BaseFlavor.resValueString(@NonNull name: String, @NonNull value: String) {
 fun BaseFlavor.resValueStringIfRequired(@NonNull propertyName: String, @NonNull value: String) {
     if (propertyName.isResourcesProperty()) {
         resValueString(propertyName.cleanTokensUp(), value)
+        println("Resource Value String: ${propertyName.cleanTokensUp()}=$value")
     }
 }
 

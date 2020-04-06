@@ -1,14 +1,44 @@
 package com.guidovezzoni.gradle.smartproperties.gradle
 
+import groovy.lang.Closure
+import org.gradle.api.Action
+import org.gradle.api.NamedDomainObjectContainer
+import org.gradle.api.Project
 import java.io.File
 
-open class SmartPropertiesExtension(
-    var sourceFile: File = File(DEFAULT_FILENAME),
-    var ciEnvironmentPrefix: String = DEFAULT_CI_ENV_PREFIX
-) {
+open class SmartPropertiesExtension(private val project: Project) {
+    private var defaultConfig: ConfigScriptModel? = null
+    var productFlavors: NamedDomainObjectContainer<ConfigScriptModel>? = null
+
+    @Suppress("unused")
+    fun defaultConfig(defaultDef: Closure<*>): ConfigScriptModel? {
+        if (defaultConfig != null) {
+            throw Exception("Only one defaultConfig closure allowed")
+        }
+        defaultConfig = ConfigScriptModel()
+
+        project.configure(defaultConfig!!, defaultDef)
+        defaultDef.delegate = defaultConfig
+
+        return defaultConfig
+    }
+
+    @Suppress("unused")
+    fun productFlavors(action: Action<in NamedDomainObjectContainer<ConfigScriptModel>?>) {
+        action.execute(productFlavors)
+    }
+
+    fun getDefaultConfigSourceFile(): File {
+        return defaultConfig?.sourceFile ?: File(DEFAULT_FILENAME)
+    }
+
+    fun getDefaultConfigCiEnvironmentPrefix(): String {
+        return defaultConfig?.ciEnvironmentPrefix ?: DEFAULT_CI_ENV_PREFIX
+    }
 
     companion object {
         const val DEFAULT_FILENAME = "smart.properties"
         const val DEFAULT_CI_ENV_PREFIX = ""
+        const val EXTENSION_NAME = "smartPropertiesPlugin"
     }
 }
