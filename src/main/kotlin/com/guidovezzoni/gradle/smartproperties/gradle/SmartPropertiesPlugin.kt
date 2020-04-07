@@ -1,6 +1,7 @@
 package com.guidovezzoni.gradle.smartproperties.gradle
 
 import com.android.build.gradle.AppExtension
+import com.guidovezzoni.gradle.smartproperties.extensions.toVariantInfo
 import com.guidovezzoni.gradle.smartproperties.logger.CustomLogging
 import com.guidovezzoni.gradle.smartproperties.model.VariantInfo
 import org.gradle.api.NamedDomainObjectContainer
@@ -28,23 +29,7 @@ class SmartPropertiesPlugin : Plugin<Project> {
         android.applicationVariants.whenObjectAdded { androidVariant ->
 //            val configExtension = project.extensions.getByType(SmartPropertiesExtension::class.java)
 
-            val variantInfo = VariantInfo(variantName = androidVariant.name)
-
-            extension.productFlavors?.forEach { productFlavor ->
-                if (productFlavor.name.equals(androidVariant.flavorName))
-                    variantInfo.sourceFile = productFlavor.sourceFile
-            }
-            if (variantInfo.sourceFile == null) {
-                variantInfo.sourceFile = extension.getDefaultConfigSourceFile()
-            }
-
-            extension.productFlavors?.forEach { productFlavor ->
-                if (productFlavor.name.equals(androidVariant.flavorName))
-                    variantInfo.ciEnvironmentPrefix = productFlavor.ciEnvironmentPrefix
-            }
-            if (variantInfo.ciEnvironmentPrefix == null) {
-                variantInfo.ciEnvironmentPrefix = extension.getDefaultConfigCiEnvironmentPrefix()
-            }
+            val variantInfo = extension.toVariantInfo(androidVariant)
 
             println("\n***** Plugin Extension **********")
             println("* VariantInfo=$variantInfo")

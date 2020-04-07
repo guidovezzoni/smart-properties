@@ -25,7 +25,6 @@ fun BaseFlavor.resValueString(@NonNull name: String, @NonNull value: String) {
 fun BaseFlavor.resValueStringIfRequired(@NonNull propertyName: String, @NonNull value: String) {
     if (propertyName.isResourcesProperty()) {
         resValueString(propertyName.cleanTokensUp(), value)
-        println("Resource Value String: ${propertyName.cleanTokensUp()}=$value")
+        println("RESVALUE String: ${propertyName.cleanTokensUp()}=$value")
     }
 }
-

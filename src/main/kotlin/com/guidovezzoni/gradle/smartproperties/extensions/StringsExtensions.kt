@@ -26,17 +26,17 @@ fun String.doubleQuoted(): String {
     return "$DOUBLE_QUOTE$this$DOUBLE_QUOTE"
 }
 
-fun String.hasTokens():Boolean {
+fun String.hasTokens(): Boolean {
     return false
 }
 
-fun String.hasUnknownTokens():Boolean {
-    return false
+fun String.hasUnknownTokens(): Boolean {
+    return this.cleanTokensUp().hasTokens()
 }
 
 fun String.cleanTokensUp(): String {
     return this.replace(BUILDCONFIG_TOKEN, "")
         .replace(RESOURCES_TOKEN, "")
-        .replace(PROJECT_EXT_TOKEN, "")
-        .replace(ROOT_PROJ_EXT_TOKEN, "")
+//        .replace(PROJECT_EXT_TOKEN, "")
+//        .replace(ROOT_PROJ_EXT_TOKEN, "")
 }
