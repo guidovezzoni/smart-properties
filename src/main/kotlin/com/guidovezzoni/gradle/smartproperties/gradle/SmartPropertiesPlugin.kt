@@ -1,7 +1,6 @@
 package com.guidovezzoni.gradle.smartproperties.gradle
 
 import com.android.build.gradle.AppExtension
-import com.guidovezzoni.gradle.smartproperties.extensions.*
 import com.guidovezzoni.gradle.smartproperties.logger.CustomLogging
 import com.guidovezzoni.gradle.smartproperties.model.VariantInfo
 import org.gradle.api.NamedDomainObjectContainer
@@ -59,36 +58,20 @@ class SmartPropertiesPlugin : Plugin<Project> {
             entries.load(variantInfo.sourceFile?.reader())
 
             if (androidVariant.generateBuildConfigProvider.isPresent) {
-                val task =
-                    project.tasks.create("generateBuildConfigSmartProperties${androidVariant.name.capitalize()}") {
+                val generateBuildConfigTask =
+                    project.tasks.create(
+                        "generate${androidVariant.name.capitalize()}BuildConfigSmartProperties",
+                        GenerateBuildConfigSmartPropertiesTask::class.java
+                    ) { it.entries = entries }
+                androidVariant.generateBuildConfigProvider.get().dependsOn(generateBuildConfigTask)
 
-                        entries.forEach { propKey, propValue ->
-                            val keyString = propKey.toString()
-                            val valueString = propValue.toString()
-
-//                        val finalValue = getEnvVar(keyString.cleanTokensUp()) ?: valueString
-                            val escapedValue = valueString.doubleQuoted()
-
-                            android.defaultConfig.buildConfigFieldStringIfRequested(keyString, escapedValue)
-                        }
-                    }
-                androidVariant.generateBuildConfigProvider.get().dependsOn(task)
-            }
-
-            if (androidVariant.mergeResourcesProvider.isPresent) {
-                val task = project.tasks.create("generateResourcesSmartProperties${androidVariant.name.capitalize()}") {
-
-                    entries.forEach { propKey, propValue ->
-                        val keyString = propKey.toString()
-                        val valueString = propValue.toString()
-
-//                        val finalValue = getEnvVar(keyString.cleanTokensUp()) ?: valueString
-                        val escapedValue = valueString.doubleQuoted()
-
-                        android.defaultConfig.resValueStringIfRequired(keyString, escapedValue)
-                    }
-                }
-                androidVariant.mergeResourcesProvider.get().dependsOn(task)
+                val generateResourcesTask = project.tasks.create(
+                    "generate${androidVariant.name.capitalize()}ResourcesSmartProperties",
+                    GenerateResourcesSmartProperties::class.java
+                ) { it.entries = entries }
+                androidVariant.generateBuildConfigProvider.get().dependsOn(generateResourcesTask)
+            } else {
+                throw Exception("Cannot find generateBuildConfigTask")
             }
         }
     }
