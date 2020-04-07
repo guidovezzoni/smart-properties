@@ -25,7 +25,12 @@ open class GenerateBuildConfigSmartPropertiesTask : DefaultTask() {
 //                        val finalValue = getEnvVar(keyString.cleanTokensUp()) ?: valueString
             val escapedValue = valueString.doubleQuoted()
 
-            android.defaultConfig.buildConfigFieldStringIfRequested(keyString, escapedValue)
+//            android.defaultConfig.buildConfigFieldStringIfRequested(keyString, escapedValue)
+
+            val productFlavor = android.productFlavors.find {   productFlavor ->
+                productFlavor.name == "alpha"
+            }
+            productFlavor?.buildConfigFieldStringIfRequested(keyString, escapedValue)
         }
     }
 }

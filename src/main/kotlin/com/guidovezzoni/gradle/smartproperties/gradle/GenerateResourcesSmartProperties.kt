@@ -1,6 +1,7 @@
 package com.guidovezzoni.gradle.smartproperties.gradle
 
 import com.android.build.gradle.AppExtension
+import com.guidovezzoni.gradle.smartproperties.extensions.buildConfigFieldStringIfRequested
 import com.guidovezzoni.gradle.smartproperties.extensions.doubleQuoted
 import com.guidovezzoni.gradle.smartproperties.extensions.resValueStringIfRequired
 import org.gradle.api.DefaultTask
@@ -25,7 +26,13 @@ open class GenerateResourcesSmartProperties : DefaultTask() {
 //                        val finalValue = getEnvVar(keyString.cleanTokensUp()) ?: valueString
             val escapedValue = valueString.doubleQuoted()
 
-            android.defaultConfig.resValueStringIfRequired(keyString, escapedValue)
+//            android.defaultConfig.resValueStringIfRequired(keyString, escapedValue)
+
+            val productFlavor = android.productFlavors.find {   productFlavor ->
+                productFlavor.name == "alpha"
+            }
+            productFlavor?.resValueStringIfRequired(keyString, escapedValue)
+
         }
     }
 }
