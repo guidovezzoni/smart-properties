@@ -5,6 +5,6 @@ import org.gradle.api.logging.Logger
 class CustomLogger(logger: Logger) : Logger by logger {
     override fun debug(message: String?) {
         // TODO remove this / handle differently
-         quiet(message)
+         quiet("ooooooooooooooo $message")
     }
 }

@@ -1,13 +1,12 @@
 package com.guidovezzoni.gradle.smartproperties.gradle
 
 import com.guidovezzoni.gradle.smartproperties.extensions.getAndroid
-import com.guidovezzoni.gradle.smartproperties.extensions.toVariantInfo
+import com.guidovezzoni.gradle.smartproperties.extensions.getConfigurationForVariant
 import com.guidovezzoni.gradle.smartproperties.helper.SmartProperties
 import com.guidovezzoni.gradle.smartproperties.logger.CustomLogging
 import com.guidovezzoni.gradle.smartproperties.model.ConfigScriptModel
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import java.util.*
 
 @Suppress("UnstableApiUsage")
 class SmartPropertiesPlugin : Plugin<Project> {
@@ -23,12 +22,12 @@ class SmartPropertiesPlugin : Plugin<Project> {
         extension.productFlavors = project.container(ConfigScriptModel::class.java)
 
         project.getAndroid().applicationVariants.whenObjectAdded { androidVariant ->
-            val variantInfo = extension.toVariantInfo(androidVariant)
+            val variantInfo = extension.getConfigurationForVariant(androidVariant)
 
             logger.debug("AndroidVariant=${androidVariant.name}")
             logger.debug("SmartProperty VariantInfo=$variantInfo")
 
-            val smartProperties = SmartProperties()
+            val smartProperties = SmartProperties(variantInfo.ciEnvironmentPrefix)
             smartProperties.load(variantInfo.sourceFile)
 
             if (androidVariant.generateBuildConfigProvider.isPresent) {

@@ -3,25 +3,26 @@ package com.guidovezzoni.gradle.smartproperties.extensions
 import com.android.build.gradle.api.ApplicationVariant
 import com.guidovezzoni.gradle.smartproperties.gradle.SmartPropertiesExtension
 import com.guidovezzoni.gradle.smartproperties.model.VariantInfo
+import java.io.File
 
-fun SmartPropertiesExtension.toVariantInfo(androidVariant: ApplicationVariant): VariantInfo {
-    val variantInfo = VariantInfo(variantName = androidVariant.name)
-
-    productFlavors?.forEach { productFlavor ->
-        if (productFlavor.name.equals(androidVariant.flavorName))
-            variantInfo.sourceFile = productFlavor.sourceFile
-    }
-    if (variantInfo.sourceFile == null) {
-        variantInfo.sourceFile = getDefaultConfigSourceFile()
-    }
+fun SmartPropertiesExtension.getConfigurationForVariant(androidVariant: ApplicationVariant): VariantInfo {
+    var flavorName: String? = null
+    var sourceFile: File? = null
+    var ciEnvironmentPrefix: String? = null
 
     productFlavors?.forEach { productFlavor ->
-        if (productFlavor.name.equals(androidVariant.flavorName))
-            variantInfo.ciEnvironmentPrefix = productFlavor.ciEnvironmentPrefix
-    }
-    if (variantInfo.ciEnvironmentPrefix == null) {
-        variantInfo.ciEnvironmentPrefix = getDefaultConfigCiEnvironmentPrefix()
+        if (productFlavor.name.equals(androidVariant.flavorName)) {
+            logger.debug("A productFlavor has been found that matches the current Android variant flavorName (${androidVariant.flavorName})")
+            flavorName = productFlavor.name
+            sourceFile = productFlavor.sourceFile
+            ciEnvironmentPrefix = productFlavor.ciEnvironmentPrefix
+        }
     }
 
-    return variantInfo
+    return VariantInfo(
+        androidVariant.name,
+        flavorName ?: "",
+        sourceFile ?: getDefaultConfigSourceFile(),
+        ciEnvironmentPrefix ?: getDefaultConfigCiEnvironmentPrefix()
+    )
 }

@@ -1,5 +1,6 @@
 package com.guidovezzoni.gradle.smartproperties.gradle
 
+import com.guidovezzoni.gradle.smartproperties.logger.CustomLogging
 import com.guidovezzoni.gradle.smartproperties.model.ConfigScriptModel
 import groovy.lang.Closure
 import org.gradle.api.Action
@@ -8,7 +9,9 @@ import org.gradle.api.Project
 import java.io.File
 
 open class SmartPropertiesExtension(private val project: Project) {
-    private var defaultConfig: ConfigScriptModel? = null
+    val logger = CustomLogging.getLogger(SmartPropertiesExtension::class.java)
+
+    var defaultConfig: ConfigScriptModel? = null
     var productFlavors: NamedDomainObjectContainer<ConfigScriptModel>? = null
 
     @Suppress("unused")
