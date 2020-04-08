@@ -7,8 +7,6 @@ Features:
 * the entries can automatically create entries in:
   * BUILDCONFIG.java
   * resources
-  * gradle rootProject ext property
-  * gradle sub project ext property
   
   
 # Example
@@ -19,7 +17,7 @@ property02.Resources=prop02
 property03.ProjectExt.BuildConfig=prop03
 property04.RootProjExt=prop04
 ```
-Will:
+The plugin will perform the following actions:
 
 1 **BUILDCONFIG**: generate this code in the sub-project BuildConfig
 ```java
@@ -33,22 +31,8 @@ public final class BuildConfig {
 
 2  **Shared resources**: make available these shared resources
 ```
-@string/property02
+<string name="property02" translatable="false">"prop02"</string>
 ``` 
-
-3 **Project ext**: make available an ext property in the gradle sub project   
-```groovy
-    if (project.ext.has("property03")) {
-        println "property03 found in sub project: $property03"
-    }
-```
-
-4 **RootProject ext**: make available an ext property in the gradle root project   
-   ```groovy
-       if (project.rootProject.ext.has("property04")) {
-           println "property04 found in root project: $property04"
-       }
-   ```
 
 Additionally, any of the above properties can be easily overridden by defining two types of environment variables:
 * [propertyName]=[new value] -  this can simply be defined on any machine 
@@ -86,7 +70,7 @@ Load the plugin in your `app` subproject and configure it
 apply plugin: 'com.guidovezzoni.smartproperties'
 ```
 
-**PLEASE NOTE**: Android flavours are not supported yet
+**PLEASE NOTE**: This plugin is meant to be used in a gradle Android sub-project, it hasn't been tested on the root project.
 
 ## Configuration
 
