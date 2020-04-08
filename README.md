@@ -99,17 +99,19 @@ Here are the available settings:
     }
 ```
 
+## Known Issues
+1. generated resValue resources do not seem to be identified correctly by AndroidStudio IDE, however they are built correctly by both gradle and AndroidStudio
 
 # Enhancement List
 
 ## Major features
 * ~~environment variables~~
-* ~~support gradle ext~~
-* support flavours
+* support gradle ext
+* ~~support flavours~~
 * fabric https://github.com/plastiv/CrashlyticsDemo/
 
 ## Minor features/tech improvements
-* logger
+* ~~logger~~
 * unit test https://guides.gradle.org/testing-gradle-plugins/
 * uppercase/underscores for buildconfig
 
