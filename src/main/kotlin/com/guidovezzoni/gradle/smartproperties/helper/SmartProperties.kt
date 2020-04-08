@@ -6,7 +6,7 @@ import com.guidovezzoni.gradle.smartproperties.model.Type
 import java.io.File
 import java.util.*
 
-class SmartProperties(val ciPrefix: String) : HashMap<String, Pair<String, Set<Type>>>() {
+class SmartProperties(private val ciPrefix: String) : HashMap<String, Pair<String, Set<Type>>>() {
     private val logger = CustomLogging.getLogger(SmartProperties::class.java)
 
     fun load(file: File?) {
@@ -21,14 +21,12 @@ class SmartProperties(val ciPrefix: String) : HashMap<String, Pair<String, Set<T
             val valueString = propValue.toString()
 
             if (!keyString.hasTokens()) {
-                throw Exception("Keystring $keyString doesn't have any token")
+                throw Exception("Key $keyString doesn't have any token")
             }
 
-//            TODO  to be implemented
-//            if (keyString.hasUnknownTokens()){
-//                throw Exception("Keystring $keyString has unknown tokens")
-//            }
-
+            if (keyString.hasUnknownTokens()) {
+                throw Exception("Key $keyString has unknown tokens")
+            }
 
             val finalValue = getEnvVar(keyString.cleanTokensUp(), ciPrefix) ?: valueString
 
@@ -47,7 +45,6 @@ class SmartProperties(val ciPrefix: String) : HashMap<String, Pair<String, Set<T
         }
     }
 
-    //TODO this should be external
     private fun getEnvVar(propName: String, ciPrefix: String): String? {
         val ciPropName = ciPrefix + propName
         val ciEnvVar = System.getenv(ciPropName)

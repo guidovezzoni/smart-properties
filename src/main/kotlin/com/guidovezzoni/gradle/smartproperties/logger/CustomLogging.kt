@@ -3,16 +3,21 @@ package com.guidovezzoni.gradle.smartproperties.logger
 import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
 
-@Suppress("unused")
 class CustomLogging {
 
     companion object {
+        private const val DEBUG = false
+
+        @Suppress("ConstantConditionIf")
         fun getLogger(c: Class<*>): Logger {
-            // TODO sort this out
-//            return Logging.getLogger(c)
-            return CustomLogger(Logging.getLogger(c))
+            return if (DEBUG) {
+                CustomLogger(Logging.getLogger(c))
+            } else {
+                Logging.getLogger(c)
+            }
         }
 
+        @Suppress("unused")
         fun getLogger(name: String): Logger {
             return Logging.getLogger(name)
         }
