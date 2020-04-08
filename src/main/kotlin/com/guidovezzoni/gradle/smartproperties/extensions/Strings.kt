@@ -2,6 +2,7 @@ package com.guidovezzoni.gradle.smartproperties.extensions
 
 const val BUILDCONFIG_TOKEN = ".BuildConfig"
 const val RESOURCES_TOKEN = ".Resources"
+
 //const val PROJECT_EXT_TOKEN = ".ProjectExt"
 //const val ROOT_PROJ_EXT_TOKEN = ".RootProjExt"
 const val DOUBLE_QUOTE = "\""
@@ -27,7 +28,7 @@ fun String.doubleQuoted(): String {
 }
 
 fun String.hasTokens(): Boolean {
-    return false
+    return isBuildConfigProperty() || isResourcesProperty()
 }
 
 fun String.hasUnknownTokens(): Boolean {

@@ -2,13 +2,14 @@ package com.guidovezzoni.gradle.smartproperties.gradle
 
 import com.guidovezzoni.gradle.smartproperties.extensions.getAndroid
 import com.guidovezzoni.gradle.smartproperties.extensions.toVariantInfo
+import com.guidovezzoni.gradle.smartproperties.helper.SmartProperties
 import com.guidovezzoni.gradle.smartproperties.logger.CustomLogging
 import com.guidovezzoni.gradle.smartproperties.model.ConfigScriptModel
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import java.util.*
 
-@Suppress("unused", "UnstableApiUsage")
+@Suppress("UnstableApiUsage")
 class SmartPropertiesPlugin : Plugin<Project> {
     private val logger = CustomLogging.getLogger(SmartPropertiesPlugin::class.java)
 
@@ -24,16 +25,11 @@ class SmartPropertiesPlugin : Plugin<Project> {
         project.getAndroid().applicationVariants.whenObjectAdded { androidVariant ->
             val variantInfo = extension.toVariantInfo(androidVariant)
 
-            println("\n***** Plugin Extension **********")
-            println("* VariantInfo=$variantInfo")
+            logger.debug("AndroidVariant=${androidVariant.name}")
+            logger.debug("SmartProperty VariantInfo=$variantInfo")
 
-
-            if (variantInfo.sourceFile?.exists() != true) {
-                throw IllegalArgumentException("No valid file for parameter sourceFile - ${variantInfo.sourceFile?.absoluteFile} not found")
-            }
-            logger.debug("\n***** Loading config file ${variantInfo.sourceFile?.absoluteFile}")
-            val entries = Properties()
-            entries.load(variantInfo.sourceFile?.reader())
+            val smartProperties = SmartProperties()
+            smartProperties.load(variantInfo.sourceFile)
 
             if (androidVariant.generateBuildConfigProvider.isPresent) {
                 val generateBuildConfigTask =
@@ -41,7 +37,7 @@ class SmartPropertiesPlugin : Plugin<Project> {
                         "generate${androidVariant.name.capitalize()}BuildConfigSmartProperties",
                         GenerateBuildConfigSmartPropertiesTask::class.java
                     ) {
-                        it.entries = entries
+                        it.entries = smartProperties
                         it.flavorName = androidVariant.flavorName
                     }
                 androidVariant.generateBuildConfigProvider.get().dependsOn(generateBuildConfigTask)
@@ -50,7 +46,7 @@ class SmartPropertiesPlugin : Plugin<Project> {
                     "generate${androidVariant.name.capitalize()}ResourcesSmartProperties",
                     GenerateResourcesSmartProperties::class.java
                 ) {
-                    it.entries = entries
+                    it.entries = smartProperties
                     it.flavorName = androidVariant.flavorName
                 }
                 // Not sure resources generation should depend on BuildConfig task, but it works correctly for now

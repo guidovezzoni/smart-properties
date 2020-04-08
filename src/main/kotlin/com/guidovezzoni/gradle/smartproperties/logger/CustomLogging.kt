@@ -8,7 +8,9 @@ class CustomLogging {
 
     companion object {
         fun getLogger(c: Class<*>): Logger {
-            return Logging.getLogger(c)
+            // TODO sort this out
+//            return Logging.getLogger(c)
+            return CustomLogger(Logging.getLogger(c))
         }
 
         fun getLogger(name: String): Logger {
