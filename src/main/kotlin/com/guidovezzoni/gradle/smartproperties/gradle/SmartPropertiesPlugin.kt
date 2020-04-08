@@ -3,7 +3,7 @@ package com.guidovezzoni.gradle.smartproperties.gradle
 import com.android.build.gradle.AppExtension
 import com.guidovezzoni.gradle.smartproperties.extensions.toVariantInfo
 import com.guidovezzoni.gradle.smartproperties.logger.CustomLogging
-import com.guidovezzoni.gradle.smartproperties.model.VariantInfo
+import com.guidovezzoni.gradle.smartproperties.model.ConfigScriptModel
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -47,13 +47,21 @@ class SmartPropertiesPlugin : Plugin<Project> {
                     project.tasks.create(
                         "generate${androidVariant.name.capitalize()}BuildConfigSmartProperties",
                         GenerateBuildConfigSmartPropertiesTask::class.java
-                    ) { it.entries = entries }
+                    ) {
+                        it.entries = entries
+                        it.flavorName = androidVariant.flavorName
+                    }
                 androidVariant.generateBuildConfigProvider.get().dependsOn(generateBuildConfigTask)
 
                 val generateResourcesTask = project.tasks.create(
                     "generate${androidVariant.name.capitalize()}ResourcesSmartProperties",
                     GenerateResourcesSmartProperties::class.java
-                ) { it.entries = entries }
+                ) {
+                    it.entries = entries
+                    it.flavorName = androidVariant.flavorName
+                }
+                // Not sure resources generation should depend on BuildConfig task, but it works correctly for now
+                // TODO I need to identify the proper task
                 androidVariant.generateBuildConfigProvider.get().dependsOn(generateResourcesTask)
             } else {
                 throw Exception("Cannot find generateBuildConfigTask")

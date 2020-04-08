@@ -1,36 +1,11 @@
 package com.guidovezzoni.gradle.smartproperties.gradle
 
-import com.android.build.gradle.AppExtension
+import com.android.build.gradle.internal.dsl.ProductFlavor
 import com.guidovezzoni.gradle.smartproperties.extensions.buildConfigFieldStringIfRequested
-import com.guidovezzoni.gradle.smartproperties.extensions.doubleQuoted
-import org.gradle.api.DefaultTask
-import org.gradle.api.tasks.Internal
-import org.gradle.api.tasks.TaskAction
-import java.util.*
+import com.guidovezzoni.gradle.smartproperties.gradle.base.SmartPropertiesBaseTask
 
-open class GenerateBuildConfigSmartPropertiesTask : DefaultTask() {
-    @get:Internal
-    internal lateinit var entries: Properties
-
-    @TaskAction
-    fun perform() {
-        val android = project.extensions.findByName("android") as AppExtension?
-            ?: throw Exception("Not an Android application")
-
-
-        entries.forEach { propKey, propValue ->
-            val keyString = propKey.toString()
-            val valueString = propValue.toString()
-
-//                        val finalValue = getEnvVar(keyString.cleanTokensUp()) ?: valueString
-            val escapedValue = valueString.doubleQuoted()
-
-//            android.defaultConfig.buildConfigFieldStringIfRequested(keyString, escapedValue)
-
-            val productFlavor = android.productFlavors.find {   productFlavor ->
-                productFlavor.name == "alpha"
-            }
-            productFlavor?.buildConfigFieldStringIfRequested(keyString, escapedValue)
-        }
+open class GenerateBuildConfigSmartPropertiesTask : SmartPropertiesBaseTask() {
+    override fun performFlavorOperation(productFlavor: ProductFlavor, key: String, doubleQuotedValue: String) {
+        productFlavor.buildConfigFieldStringIfRequested(key, doubleQuotedValue)
     }
 }

@@ -1,5 +1,6 @@
 package com.guidovezzoni.gradle.smartproperties.gradle
 
+import com.guidovezzoni.gradle.smartproperties.model.ConfigScriptModel
 import groovy.lang.Closure
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
