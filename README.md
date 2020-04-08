@@ -93,10 +93,24 @@ apply plugin: 'com.guidovezzoni.smartproperties'
 Here are the available settings:
 
 ```groovy
-    smartPropertiesPlugin {
-        sourceFile = file("$rootDir/external.properties")
+smartPropertiesPlugin {
+    defaultConfig {
+        sourceFile = file("$rootDir/smart.properties")
         ciEnvironmentPrefix = "build_"
     }
+
+    productFlavors {
+        alpha {
+            sourceFile = file("$rootDir/smartprop-alpha.properties")
+        }
+        beta {
+            sourceFile = file("$rootDir/smartprop-beta.properties")
+        }
+        prod {
+            ciEnvironmentPrefix = "prod_"
+        }
+    }
+}
 ```
 
 ## Known Issues

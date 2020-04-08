@@ -2,11 +2,10 @@ package com.guidovezzoni.gradle.smartproperties.gradle.base
 
 import com.android.build.gradle.internal.dsl.ProductFlavor
 import com.guidovezzoni.gradle.smartproperties.extensions.getAndroid
-import com.guidovezzoni.gradle.smartproperties.helper.SmartProperties
+import com.guidovezzoni.gradle.smartproperties.properties.SmartProperties
 import com.guidovezzoni.gradle.smartproperties.logger.CustomLogging
 import com.guidovezzoni.gradle.smartproperties.model.Type
 import org.gradle.api.DefaultTask
-import org.gradle.api.logging.Logger
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.TaskAction
 

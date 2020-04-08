@@ -2,7 +2,7 @@ package com.guidovezzoni.gradle.smartproperties.gradle
 
 import com.guidovezzoni.gradle.smartproperties.extensions.getAndroid
 import com.guidovezzoni.gradle.smartproperties.extensions.getConfigurationForVariant
-import com.guidovezzoni.gradle.smartproperties.helper.SmartProperties
+import com.guidovezzoni.gradle.smartproperties.properties.SmartProperties
 import com.guidovezzoni.gradle.smartproperties.logger.CustomLogging
 import com.guidovezzoni.gradle.smartproperties.model.ConfigScriptModel
 import org.gradle.api.Plugin
@@ -31,22 +31,24 @@ class SmartPropertiesPlugin : Plugin<Project> {
             smartProperties.load(variantInfo.sourceFile)
 
             if (androidVariant.generateBuildConfigProvider.isPresent) {
+                val taskVariantName = androidVariant.name.capitalize()
+
                 val generateBuildConfigTask =
                     project.tasks.create(
-                        "generate${androidVariant.name.capitalize()}BuildConfigSmartProperties",
+                        "generate${taskVariantName}BuildConfigSmartProperties",
                         GenerateBuildConfigSmartPropertiesTask::class.java
-                    ) {
-                        it.entries = smartProperties
-                        it.flavorName = androidVariant.flavorName
+                    ) { task ->
+                        task.entries = smartProperties
+                        task.flavorName = androidVariant.flavorName
                     }
                 androidVariant.generateBuildConfigProvider.get().dependsOn(generateBuildConfigTask)
 
                 val generateResourcesTask = project.tasks.create(
-                    "generate${androidVariant.name.capitalize()}ResourcesSmartProperties",
+                    "generate${taskVariantName}ResourcesSmartProperties",
                     GenerateResourcesSmartProperties::class.java
-                ) {
-                    it.entries = smartProperties
-                    it.flavorName = androidVariant.flavorName
+                ) { task ->
+                    task.entries = smartProperties
+                    task.flavorName = androidVariant.flavorName
                 }
                 // Not sure resources generation should depend on BuildConfig task, but it works correctly for now
                 // TODO I need to identify the proper task

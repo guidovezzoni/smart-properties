@@ -1,4 +1,4 @@
-package com.guidovezzoni.gradle.smartproperties.helper
+package com.guidovezzoni.gradle.smartproperties.properties
 
 import com.guidovezzoni.gradle.smartproperties.extensions.*
 import com.guidovezzoni.gradle.smartproperties.logger.CustomLogging
