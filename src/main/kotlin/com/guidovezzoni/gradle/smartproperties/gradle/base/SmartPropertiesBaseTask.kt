@@ -1,6 +1,5 @@
 package com.guidovezzoni.gradle.smartproperties.gradle.base
 
-import com.android.build.gradle.AppExtension
 import com.android.build.gradle.internal.dsl.ProductFlavor
 import com.guidovezzoni.gradle.smartproperties.extensions.doubleQuoted
 import com.guidovezzoni.gradle.smartproperties.extensions.getAndroid

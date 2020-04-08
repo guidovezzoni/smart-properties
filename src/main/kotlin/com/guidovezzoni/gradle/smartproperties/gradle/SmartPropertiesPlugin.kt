@@ -1,10 +1,9 @@
 package com.guidovezzoni.gradle.smartproperties.gradle
 
-import com.android.build.gradle.AppExtension
+import com.guidovezzoni.gradle.smartproperties.extensions.getAndroid
 import com.guidovezzoni.gradle.smartproperties.extensions.toVariantInfo
 import com.guidovezzoni.gradle.smartproperties.logger.CustomLogging
 import com.guidovezzoni.gradle.smartproperties.model.ConfigScriptModel
-import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import java.util.*
@@ -22,13 +21,7 @@ class SmartPropertiesPlugin : Plugin<Project> {
 
         extension.productFlavors = project.container(ConfigScriptModel::class.java)
 
-        val android = project.extensions.findByName("android") as AppExtension?
-            ?: throw Exception("Not an Android application")
-
-//        println("\n**** Available Android variants ****")
-        android.applicationVariants.whenObjectAdded { androidVariant ->
-//            val configExtension = project.extensions.getByType(SmartPropertiesExtension::class.java)
-
+        project.getAndroid().applicationVariants.whenObjectAdded { androidVariant ->
             val variantInfo = extension.toVariantInfo(androidVariant)
 
             println("\n***** Plugin Extension **********")
@@ -67,22 +60,5 @@ class SmartPropertiesPlugin : Plugin<Project> {
                 throw Exception("Cannot find generateBuildConfigTask")
             }
         }
-    }
-
-    private fun checkAndroidVariant(project: Project) {
-        val flavour: NamedDomainObjectContainer<ConfigScriptModel> = project.container(
-            ConfigScriptModel::class.java
-        )
-        project.extensions.add("productFlavors", flavour)
-
-        logger.quiet("\n**** Available SmartProperties variants ****")
-        flavour.forEach { appVariant ->
-            logger.quiet("* ${appVariant.ciEnvironmentPrefix}")
-        }
-//
-//        NamedDomainObjectContainer<ConfigModel> ribbonProductFlavors = project . container (EasyLauncherConfig)
-//        project.extensions.add('productFlavors', ribbonProductFlavors)
-
-
     }
 }
