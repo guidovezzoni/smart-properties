@@ -9,6 +9,10 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.TaskAction
 
+/**
+ * Implement incremental task
+ * @see https://guides.gradle.org/implementing-gradle-plugins/#benefiting_from_incremental_tasks
+ */
 abstract class SmartPropertiesBaseTask : DefaultTask() {
     @get:Internal
     internal lateinit var entries: SmartProperties
