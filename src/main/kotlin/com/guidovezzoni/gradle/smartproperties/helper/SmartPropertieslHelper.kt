@@ -49,7 +49,7 @@ class SmartPropertieslHelper {
 
             val android = project.extensions.findByName("android") as AppExtension
 
-            val finalValue = getEnvVar(keyString.cleanTokensUp()) ?: valueString
+            val finalValue = getEnvVar(keyString.cleanUpTokens()) ?: valueString
             val escapedValue = finalValue.doubleQuoted()
 
             logger.debug("* PropertyName=$keyString  *  finalValue=$finalValue")
@@ -58,11 +58,11 @@ class SmartPropertieslHelper {
             android.defaultConfig.resValueStringIfRequired(keyString, escapedValue)
 
             if (keyString.isProjectExtProperty()) {
-                project.extensions.extraProperties.set(keyString.cleanTokensUp(), finalValue)
+                project.extensions.extraProperties.set(keyString.cleanUpTokens(), finalValue)
             }
 
             if (keyString.isRootProjectExtProperty()) {
-                project.rootProject.extensions.extraProperties.set(keyString.cleanTokensUp(), finalValue)
+                project.rootProject.extensions.extraProperties.set(keyString.cleanUpTokens(), finalValue)
             }
         }
     }

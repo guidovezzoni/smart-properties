@@ -26,7 +26,7 @@ fun String.doubleQuoted(): String {
     return "$DOUBLE_QUOTE$this$DOUBLE_QUOTE"
 }
 
-fun String.hasTokens():Boolean {
+fun String.hasKnownTokens():Boolean {
     return false
 }
 
@@ -34,7 +34,7 @@ fun String.hasUnknownTokens():Boolean {
     return false
 }
 
-fun String.cleanTokensUp(): String {
+fun String.cleanUpTokens(): String {
     return this.replace(BUILDCONFIG_TOKEN, "")
         .replace(RESOURCES_TOKEN, "")
         .replace(PROJECT_EXT_TOKEN, "")
