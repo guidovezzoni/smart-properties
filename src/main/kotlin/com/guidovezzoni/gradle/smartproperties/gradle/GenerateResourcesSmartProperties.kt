@@ -14,7 +14,7 @@ open class GenerateResourcesSmartProperties : SmartPropertiesBaseTask() {
     ) {
         if (types.contains(Type.RESOURCES)) {
             productFlavor.resValueString(key, doubleQuotedValue)
-            logger.debug("RESVALUE String: $key=$doubleQuotedValue")
+            logger.debug("RESVALUE String added $key")
         }
     }
 }

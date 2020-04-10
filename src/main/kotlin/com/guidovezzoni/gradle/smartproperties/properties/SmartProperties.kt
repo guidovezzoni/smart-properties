@@ -28,7 +28,7 @@ class SmartProperties(private val ciPrefix: String) : HashMap<String, Pair<Strin
                 throw Exception("Key $keyString has unknown tokens")
             }
 
-            val finalValue = getEnvVar(keyString.cleanTokensUp(), ciPrefix) ?: valueString
+            val finalValue = getEnvVar(keyString.cleanUpTokens(), ciPrefix) ?: valueString
 
             val type: MutableSet<Type> = mutableSetOf()
             if (keyString.isBuildConfigProperty()) {
