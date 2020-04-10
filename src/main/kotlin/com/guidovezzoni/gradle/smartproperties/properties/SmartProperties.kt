@@ -37,9 +37,17 @@ class SmartProperties(private val ciPrefix: String) : HashMap<String, Pair<Strin
             if (keyString.isResourcesProperty()) {
                 type.add(Type.RESOURCES)
             }
+            if (keyString.isProjectExtProperty()) {
+                logger.quiet("Project Ext smart-property is an experimental and not supported feature (${keyString.cleanUpTokens()}).")
+                type.add(Type.PROJECT_EXT)
+            }
+            if (keyString.isRootProjectExtProperty()) {
+                logger.quiet("Root Project Ext smart-property is an experimental and not supported feature (${keyString.cleanUpTokens()}).")
+                type.add(Type.ROOT_EXT)
+            }
 
             put(
-                keyString.cleanTokensUp(),
+                keyString.cleanUpTokens(),
                 Pair(finalValue.doubleQuoted(), type)
             )
         }
