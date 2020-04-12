@@ -1,17 +1,22 @@
 package com.guidovezzoni.gradle.smartproperties.properties
 
+import com.guidovezzoni.gradle.smartproperties.exceptions.IllegalPropertyException
+import com.guidovezzoni.gradle.smartproperties.exceptions.InvalidConfigurationException
 import com.guidovezzoni.gradle.smartproperties.extensions.*
 import com.guidovezzoni.gradle.smartproperties.logger.CustomLogging
 import com.guidovezzoni.gradle.smartproperties.model.Type
 import java.io.File
 import java.util.*
 
+/**
+ * This class handles the logic behind the smart-properties and builds a specific HashMap to handle them
+ */
 class SmartProperties(private val ciPrefix: String) : HashMap<String, Pair<String, Set<Type>>>() {
     private val logger = CustomLogging.getLogger(SmartProperties::class.java)
 
     fun load(file: File?) {
         if (file?.exists() != true) {
-            throw IllegalArgumentException("No valid file for parameter sourceFile - ${file?.absoluteFile} not found")
+            throw InvalidConfigurationException("No valid file for parameter sourceFile - ${file?.absoluteFile} not found")
         }
         val properties = Properties()
         properties.load(file.reader())
@@ -21,11 +26,11 @@ class SmartProperties(private val ciPrefix: String) : HashMap<String, Pair<Strin
             val valueString = propValue.toString()
 
             if (!keyString.hasTokens()) {
-                throw Exception("Key $keyString doesn't have any token")
+                throw IllegalPropertyException("Key $keyString doesn't have any token")
             }
 
             if (keyString.hasUnknownTokens()) {
-                throw Exception("Key $keyString has unknown tokens")
+                throw IllegalPropertyException("Key $keyString has unknown tokens")
             }
 
             val finalValue = getEnvVar(keyString.cleanUpTokens(), ciPrefix) ?: valueString
@@ -39,7 +44,7 @@ class SmartProperties(private val ciPrefix: String) : HashMap<String, Pair<Strin
             }
 
             put(
-                keyString.cleanTokensUp(),
+                keyString.cleanUpTokens(),
                 Pair(finalValue.doubleQuoted(), type)
             )
         }

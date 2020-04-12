@@ -1,12 +1,14 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2e39b28f9cea49c28bdd3cfd8318b5c2)](https://www.codacy.com/manual/guidovezzoni/smart-properties?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=guidovezzoni/smart-properties&amp;utm_campaign=Badge_Grade)
+
 # SmartPropertiesPlugin
 Manage build parameters from a *.property file or an environment variables
 
 The purpose of this library is to handle build parameters via a specific formatting of a `.properties` file.
 Features:
-* the entries defined in the `.properties` file can be overridden by an environment variable, for example for CI integration
-* the entries can automatically create entries in:
-  * BUILDCONFIG.java
-  * resources
+*  the entries defined in the `.properties` file can be overridden by an environment variable, for example for CI integration
+*  the entries can automatically create entries in:
+   *  BUILDCONFIG.java
+   *  resources
   
   
 # Example
@@ -35,8 +37,8 @@ public final class BuildConfig {
 ``` 
 
 Additionally, any of the above properties can be easily overridden by defining two types of environment variables:
-* [propertyName]=[new value] -  this can simply be defined on any machine 
-* [prefix_propertyName]=[new value] - same as above, the prefix is a general parameter, this is typically used on CI integration
+*  [propertyName]=[new value] -  this can simply be defined on any machine 
+*  [prefix_propertyName]=[new value] - same as above, the prefix is a general parameter, this is typically used on CI integration
 
 Setting up appropriately `prefix`, the property can be overridden on local machines or CI.
 
@@ -98,28 +100,26 @@ smartPropertiesPlugin {
 ```
 
 ## Known Issues
-1. generated resValue resources do not seem to be identified correctly by AndroidStudio IDE, however they are built correctly by both gradle and AndroidStudio
+1.  generated resValue resources do not seem to be identified correctly by AndroidStudio IDE, however they are built correctly by both gradle and AndroidStudio
 
 # Enhancement List
 
 ## Major features
-* ~~environment variables~~
-* support gradle ext
-* ~~support flavours~~
-* fabric https://github.com/plastiv/CrashlyticsDemo/
+*  ~~environment variables~~
+*  support gradle ext
+*  ~~support flavours~~
+*  fabric https://github.com/plastiv/CrashlyticsDemo/
 
 ## Minor features/tech improvements
-* ~~logger~~
-* unit test https://guides.gradle.org/testing-gradle-plugins/
-* uppercase/underscores for buildconfig
+*  ~~logger~~
+*  unit test https://guides.gradle.org/testing-gradle-plugins/
+*   uppercase/underscores for buildconfig
 
-## History
-
+# History
 | Version     | Date       | Issues        | Notes                                      |
 |:------------|:-----------|:--------------|:-------------------------------------------|
 | 0.2.0_beta  | 15/03/2020 |               | First beta release                         |
 | 0.3.0_beta  | 28/03/2020 |               | env var support, Project renamed           |
-
 
 # Licence
 ```

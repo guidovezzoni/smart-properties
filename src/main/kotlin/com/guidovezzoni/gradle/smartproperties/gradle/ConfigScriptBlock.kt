@@ -1,8 +1,11 @@
-package com.guidovezzoni.gradle.smartproperties.model
+package com.guidovezzoni.gradle.smartproperties.gradle
 
 import java.io.File
 
-open class ConfigScriptModel {
+/**
+ * Config script block for plugin configuration
+ */
+open class ConfigScriptBlock {
 
     constructor()
 

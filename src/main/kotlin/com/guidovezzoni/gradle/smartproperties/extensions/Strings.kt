@@ -32,10 +32,10 @@ fun String.hasTokens(): Boolean {
 }
 
 fun String.hasUnknownTokens(): Boolean {
-    return this.cleanTokensUp().hasTokens()
+    return this.cleanUpTokens().hasTokens()
 }
 
-fun String.cleanTokensUp(): String {
+fun String.cleanUpTokens(): String {
     return this.replace(BUILDCONFIG_TOKEN, "")
         .replace(RESOURCES_TOKEN, "")
 //        .replace(PROJECT_EXT_TOKEN, "")

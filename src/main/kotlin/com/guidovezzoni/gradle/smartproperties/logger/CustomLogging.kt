@@ -3,6 +3,10 @@ package com.guidovezzoni.gradle.smartproperties.logger
 import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
 
+/**
+ * Purpose of this class is to provide a logger that logs debug info to quiet.
+ * Might be removed  later on
+ */
 class CustomLogging {
 
     companion object {

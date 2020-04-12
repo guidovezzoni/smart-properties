@@ -1,25 +1,28 @@
 package com.guidovezzoni.gradle.smartproperties.gradle
 
+import com.guidovezzoni.gradle.smartproperties.exceptions.InvalidConfigurationException
 import com.guidovezzoni.gradle.smartproperties.logger.CustomLogging
-import com.guidovezzoni.gradle.smartproperties.model.ConfigScriptModel
 import groovy.lang.Closure
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
 import java.io.File
 
-open class SmartPropertiesExtension(private val project: Project) {
-    val logger = CustomLogging.getLogger(SmartPropertiesExtension::class.java)
+/**
+ * Extension class for plugin configuration
+ */
+open class ConfigScriptExtension(private val project: Project) {
+    val logger = CustomLogging.getLogger(ConfigScriptExtension::class.java)
 
-    var defaultConfig: ConfigScriptModel? = null
-    var productFlavors: NamedDomainObjectContainer<ConfigScriptModel>? = null
+    var defaultConfig: ConfigScriptBlock? = null
+    var productFlavors: NamedDomainObjectContainer<ConfigScriptBlock>? = null
 
     @Suppress("unused")
-    fun defaultConfig(defaultDef: Closure<*>): ConfigScriptModel? {
+    fun defaultConfig(defaultDef: Closure<*>): ConfigScriptBlock? {
         if (defaultConfig != null) {
-            throw Exception("Only one defaultConfig closure allowed")
+            throw InvalidConfigurationException("Only one defaultConfig closure allowed")
         }
-        defaultConfig = ConfigScriptModel()
+        defaultConfig = ConfigScriptBlock()
 
         project.configure(defaultConfig!!, defaultDef)
         defaultDef.delegate = defaultConfig
@@ -28,7 +31,7 @@ open class SmartPropertiesExtension(private val project: Project) {
     }
 
     @Suppress("unused")
-    fun productFlavors(action: Action<in NamedDomainObjectContainer<ConfigScriptModel>?>) {
+    fun productFlavors(action: Action<in NamedDomainObjectContainer<ConfigScriptBlock>?>) {
         action.execute(productFlavors)
     }
 

@@ -10,6 +10,8 @@ import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.TaskAction
 
 /**
+ * Base task class
+ *
  * Implement incremental task
  * @see https://guides.gradle.org/implementing-gradle-plugins/#benefiting_from_incremental_tasks
  */
@@ -35,13 +37,11 @@ abstract class SmartPropertiesBaseTask : DefaultTask() {
     fun performAction() {
         val android = project.getAndroid()
 
+        val productFlavor = android.productFlavors.find { productFlavor ->
+            productFlavor.name == flavorName
+        }
+
         entries.forEach { entry ->
-
-            // take out of forEach
-            val productFlavor = android.productFlavors.find { productFlavor ->
-                productFlavor.name == flavorName
-            }
-
             productFlavor?.let { flavor ->
                 performFlavorOperation(flavor, entry.key, entry.value.first, entry.value.second)
             }

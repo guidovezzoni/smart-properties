@@ -1,11 +1,11 @@
 package com.guidovezzoni.gradle.smartproperties.extensions
 
 import com.android.build.gradle.api.ApplicationVariant
-import com.guidovezzoni.gradle.smartproperties.gradle.SmartPropertiesExtension
+import com.guidovezzoni.gradle.smartproperties.gradle.ConfigScriptExtension
 import com.guidovezzoni.gradle.smartproperties.model.VariantInfo
 import java.io.File
 
-fun SmartPropertiesExtension.getConfigurationForVariant(androidVariant: ApplicationVariant): VariantInfo {
+fun ConfigScriptExtension.getConfigurationForVariant(androidVariant: ApplicationVariant): VariantInfo {
     var flavorName: String? = null
     var sourceFile: File? = null
     var ciEnvironmentPrefix: String? = null
