@@ -25,7 +25,7 @@ class SmartProperties(private val ciPrefix: String) : HashMap<String, Pair<Strin
             val keyString = propKey.toString()
             val valueString = propValue.toString()
 
-            if (!keyString.hasTokens()) {
+            if (!keyString.hasKnownTokens()) {
                 throw IllegalPropertyException("Key $keyString doesn't have any token")
             }
 

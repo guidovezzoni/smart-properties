@@ -27,12 +27,12 @@ fun String.doubleQuoted(): String {
     return "$DOUBLE_QUOTE$this$DOUBLE_QUOTE"
 }
 
-fun String.hasTokens(): Boolean {
+fun String.hasKnownTokens(): Boolean {
     return isBuildConfigProperty() || isResourcesProperty()
 }
 
 fun String.hasUnknownTokens(): Boolean {
-    return this.cleanUpTokens().hasTokens()
+    return this.cleanUpTokens().hasKnownTokens()
 }
 
 fun String.cleanUpTokens(): String {
