@@ -1,14 +1,14 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2e39b28f9cea49c28bdd3cfd8318b5c2)](https://www.codacy.com/manual/guidovezzoni/smart-properties?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=guidovezzoni/smart-properties&amp;utm_campaign=Badge_Grade)
+
 # SmartPropertiesPlugin
 Manage build parameters from a *.property file or an environment variables
 
 The purpose of this library is to handle build parameters via a specific formatting of a `.properties` file.
 Features:
-* the entries defined in the `.properties` file can be overridden by an environment variable, for example for CI integration
-* the entries can automatically create entries in:
-  * BUILDCONFIG.java
-  * resources
-  * gradle rootProject ext property
-  * gradle sub project ext property
+*  the entries defined in the `.properties` file can be overridden by an environment variable, for example for CI integration
+*  the entries can automatically create entries in:
+   *  BUILDCONFIG.java
+   *  resources
   
   
 # Example
@@ -16,10 +16,9 @@ Given this sample file `smart.properties` in the root folder of the project:
 ```groovy
 property01.BuildConfig=prop01
 property02.Resources=prop02
-property03.ProjectExt.BuildConfig=prop03
-property04.RootProjExt=prop04
+property03.Resources.BuildConfig=prop03
 ```
-Will:
+The plugin will perform the following actions:
 
 1 **BUILDCONFIG**: generate this code in the sub-project BuildConfig
 ```java
@@ -33,26 +32,13 @@ public final class BuildConfig {
 
 2  **Shared resources**: make available these shared resources
 ```
-@string/property02
+<string name="property02" translatable="false">"prop02"</string>
+<string name="property03" translatable="false">"prop03"</string>
 ``` 
 
-3 **Project ext**: make available an ext property in the gradle sub project   
-```groovy
-    if (project.ext.has("property03")) {
-        println "property03 found in sub project: $property03"
-    }
-```
-
-4 **RootProject ext**: make available an ext property in the gradle root project   
-   ```groovy
-       if (project.rootProject.ext.has("property04")) {
-           println "property04 found in root project: $property04"
-       }
-   ```
-
 Additionally, any of the above properties can be easily overridden by defining two types of environment variables:
-* [propertyName]=[new value] -  this can simply be defined on any machine 
-* [prefix_propertyName]=[new value] - same as above, the prefix is a general parameter, this is typically used on CI integration
+*  [propertyName]=[new value] -  this can simply be defined on any machine 
+*  [prefix_propertyName]=[new value] - same as above, the prefix is a general parameter, this is typically used on CI integration
 
 Setting up appropriately `prefix`, the property can be overridden on local machines or CI.
 
@@ -86,40 +72,54 @@ Load the plugin in your `app` subproject and configure it
 apply plugin: 'com.guidovezzoni.smartproperties'
 ```
 
-**PLEASE NOTE**: Android flavours are not supported yet
+**PLEASE NOTE**: This plugin is meant to be used in a gradle Android sub-project, it hasn't been tested on the root project.
 
 ## Configuration
 
 Here are the available settings:
 
 ```groovy
-    smartPropertiesPlugin {
-        sourceFile = file("$rootDir/external.properties")
+smartPropertiesPlugin {
+    defaultConfig {
+        sourceFile = file("$rootDir/smart.properties")
         ciEnvironmentPrefix = "build_"
     }
+
+    productFlavors {
+        alpha {
+            sourceFile = file("$rootDir/smartprop-alpha.properties")
+        }
+        beta {
+            sourceFile = file("$rootDir/smartprop-beta.properties")
+        }
+        prod {
+            ciEnvironmentPrefix = "prod_"
+        }
+    }
+}
 ```
 
+## Known Issues
+1.  generated resValue resources do not seem to be identified correctly by AndroidStudio IDE, however they are built correctly by both gradle and AndroidStudio
 
 # Enhancement List
 
 ## Major features
-* ~~environment variables~~
-* ~~support gradle ext~~
-* support flavours
-* fabric https://github.com/plastiv/CrashlyticsDemo/
+*  ~~environment variables~~
+*  support gradle ext - investigation in progress
+*  ~~support flavours~~
+*  fabric https://github.com/plastiv/CrashlyticsDemo/
 
 ## Minor features/tech improvements
-* logger
-* unit test https://guides.gradle.org/testing-gradle-plugins/
-* uppercase/underscores for buildconfig
+*  ~~logger~~
+*  unit test https://guides.gradle.org/testing-gradle-plugins/
+*   uppercase/underscores for buildconfig
 
-## History
-
+# History
 | Version     | Date       | Issues        | Notes                                      |
 |:------------|:-----------|:--------------|:-------------------------------------------|
 | 0.2.0_beta  | 15/03/2020 |               | First beta release                         |
 | 0.3.0_beta  | 28/03/2020 |               | env var support, Project renamed           |
-
 
 # Licence
 ```
