@@ -6,6 +6,7 @@ const val RESOURCES_TOKEN = ".Resources"
 //const val PROJECT_EXT_TOKEN = ".ProjectExt"
 //const val ROOT_PROJ_EXT_TOKEN = ".RootProjExt"
 const val DOUBLE_QUOTE = "\""
+const val DOT = "."
 
 fun String.isBuildConfigProperty(): Boolean {
     return contains(BUILDCONFIG_TOKEN)
@@ -32,7 +33,7 @@ fun String.hasKnownTokens(): Boolean {
 }
 
 fun String.hasUnknownTokens(): Boolean {
-    return this.cleanUpTokens().hasKnownTokens()
+    return this.cleanUpTokens().contains(DOT)
 }
 
 fun String.cleanUpTokens(): String {

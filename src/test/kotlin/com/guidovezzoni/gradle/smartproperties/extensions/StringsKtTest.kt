@@ -1,10 +1,9 @@
 package com.guidovezzoni.gradle.smartproperties.extensions
 
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
-class StringsExtensionsKtTest {
+class StringsKtTest {
 
     @Test
     fun `when contains BuildConfig token then isBuildConfigProperty returns true`() {
@@ -41,7 +40,6 @@ class StringsExtensionsKtTest {
         assertEquals("\"test\"", actualValue)
     }
 
-    @Disabled
     @Test
     fun `when property has known tokens then hasKnownTokens returns true`() {
         var actualValue = "Property1.BuildConfig".hasKnownTokens()
@@ -51,7 +49,6 @@ class StringsExtensionsKtTest {
         assertEquals(true, actualValue)
     }
 
-    @Disabled
     @Test
     fun `when property has unknown tokens then hasKnownTokens returns false`() {
         val actualValue = "Property1.Unknown".hasKnownTokens()
@@ -59,7 +56,6 @@ class StringsExtensionsKtTest {
         assertEquals(false, actualValue)
     }
 
-    @Disabled
     @Test
     fun `when property doesnt have tokens then hasKnownTokens returns false`() {
         val actualValue = "Property1".hasKnownTokens()
@@ -67,7 +63,6 @@ class StringsExtensionsKtTest {
         assertEquals(false, actualValue)
     }
 
-    @Disabled
     @Test
     fun `when property has unknown tokens then hasUnknownTokens returns true`() {
         val actualValue = "Property1.Unknown.BuildConfig".hasUnknownTokens()
@@ -75,7 +70,6 @@ class StringsExtensionsKtTest {
         assertEquals(true, actualValue)
     }
 
-    @Disabled
     @Test
     fun `when property has known tokens then hasUnknownTokens returns false`() {
         var actualValue = "Property1.BuildConfig".hasUnknownTokens()
@@ -85,7 +79,6 @@ class StringsExtensionsKtTest {
         assertEquals(false, actualValue)
     }
 
-    @Disabled
     @Test
     fun `when property has no tokens then hasUnknownTokens returns false`() {
         val actualValue = "Property1".hasUnknownTokens()
@@ -95,7 +88,8 @@ class StringsExtensionsKtTest {
 
     @Test
     fun `when property has tokens cleanUpTokens removes them`() {
-        val actualValue = "Property1.Resources.BuildConfig.ProjectExt.RootProjExt".cleanUpTokens()
+//        val actualValue = "Property1.Resources.BuildConfig.ProjectExt.RootProjExt".cleanUpTokens()
+        val actualValue = "Property1.Resources.BuildConfig".cleanUpTokens()
 
         assertEquals("Property1", actualValue)
     }
