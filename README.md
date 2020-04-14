@@ -16,8 +16,7 @@ Given this sample file `smart.properties` in the root folder of the project:
 ```groovy
 property01.BuildConfig=prop01
 property02.Resources=prop02
-property03.ProjectExt.BuildConfig=prop03
-property04.RootProjExt=prop04
+property03.Resources.BuildConfig=prop03
 ```
 The plugin will perform the following actions:
 
@@ -34,6 +33,7 @@ public final class BuildConfig {
 2  **Shared resources**: make available these shared resources
 ```
 <string name="property02" translatable="false">"prop02"</string>
+<string name="property03" translatable="false">"prop03"</string>
 ``` 
 
 Additionally, any of the above properties can be easily overridden by defining two types of environment variables:
@@ -106,7 +106,7 @@ smartPropertiesPlugin {
 
 ## Major features
 *  ~~environment variables~~
-*  support gradle ext
+*  support gradle ext - investigation in progress
 *  ~~support flavours~~
 *  fabric https://github.com/plastiv/CrashlyticsDemo/
 
