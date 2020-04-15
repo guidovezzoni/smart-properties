@@ -88,7 +88,6 @@ class StringsKtTest {
 
     @Test
     fun `when property has tokens cleanUpTokens removes them`() {
-//        val actualValue = "Property1.Resources.BuildConfig.ProjectExt.RootProjExt".cleanUpTokens()
         val actualValue = "Property1.Resources.BuildConfig".cleanUpTokens()
 
         assertEquals(PROPERTY_1, actualValue)

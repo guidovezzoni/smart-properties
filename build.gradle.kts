@@ -15,11 +15,7 @@ plugins {
 dependencies {
     implementation("com.android.tools.build:gradle:3.6.1")
 
-//    testCompile("junit", "junit", "4.12")
-//    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
-//    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.2.0")
-
     testImplementation("io.mockk:mockk:1.9")
 }
 
@@ -54,11 +50,8 @@ pluginBundle {
     tags = listOf("properties", "environment variables", "android", "buildconfig", "resources")
 }
 
-// see https://levelup.gitconnected.com/on-the-mysteries-of-kotlin-test-444cf094e69f
 tasks.test {
-    // useJUnit() // JUnit4
     useJUnitPlatform()  // JUnit5
-    // useTestNG() // TestNG
 
     testLogging {
         // if you want to log all events, use events = TestLogEvent.values().toSet()
