@@ -51,7 +51,7 @@ Please note: the prefixed variable always has a higher priority.
 Add the plugin to your root project using the new plugin DSL:
 ```groovy
 plugins {
-  id "com.guidovezzoni.smartproperties" version "0.3.0-beta"
+  id "com.guidovezzoni.smartproperties" version "<latest version>"
 }
 ```
 or the leagacy plugin application:
@@ -63,7 +63,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "gradle.plugin.com.guidovezzoni.smartproperties:smart-properties:0.3.0-beta"
+    classpath "gradle.plugin.com.guidovezzoni.smartproperties:smart-properties:<latest version>"
   }
 }
 ```
@@ -115,12 +115,15 @@ smartPropertiesPlugin {
 *  ~~unit test https://guides.gradle.org/testing-gradle-plugins/~~
 *   uppercase/underscores for buildconfig
 
-# History
+# Version History
+
+Latest version: 0.4.0-beta
+
 | Version     | Date       | Issues        | Notes                                      |
 |:------------|:-----------|:--------------|:-------------------------------------------|
-| 0.2.0_beta  | 15/03/2020 |               | First beta release                         |
-| 0.3.0_beta  | 28/03/2020 |               | env var support, Project renamed           |
 | 0.4.0_beta  | 16/04/2020 |               | flavors support, logger, unit test         |
+| 0.3.0_beta  | 28/03/2020 |               | env var support, Project renamed           |
+| 0.2.0_beta  | 15/03/2020 |               | First beta release                         |
 
 # Licence
 ```
