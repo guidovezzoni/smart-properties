@@ -112,7 +112,7 @@ smartPropertiesPlugin {
 
 ## Minor features/tech improvements
 *  ~~logger~~
-*  unit test https://guides.gradle.org/testing-gradle-plugins/
+*  ~~unit test https://guides.gradle.org/testing-gradle-plugins/~~
 *   uppercase/underscores for buildconfig
 
 # History
@@ -120,6 +120,7 @@ smartPropertiesPlugin {
 |:------------|:-----------|:--------------|:-------------------------------------------|
 | 0.2.0_beta  | 15/03/2020 |               | First beta release                         |
 | 0.3.0_beta  | 28/03/2020 |               | env var support, Project renamed           |
+| 0.4.0_beta  | 16/04/2020 |               | flavors support, logger, unit test         |
 
 # Licence
 ```

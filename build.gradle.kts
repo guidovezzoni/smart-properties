@@ -31,7 +31,7 @@ gradlePlugin {
         create("smartPropertiesPlugin") {
             id = "com.guidovezzoni.smartproperties"
             group = "com.guidovezzoni.smartproperties"
-            version = "0.3.0-beta"
+            version = "0.4.0-beta"
             @Suppress("UnstableApiUsage")
             displayName = "Smart Properties Plugin"
             @Suppress("UnstableApiUsage")
