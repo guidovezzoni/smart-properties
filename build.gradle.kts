@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
 repositories {
     mavenCentral()
     jcenter()
@@ -13,7 +15,8 @@ plugins {
 dependencies {
     implementation("com.android.tools.build:gradle:3.6.1")
 
-//    testCompile("junit", "junit", "4.12")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
+    testImplementation("io.mockk:mockk:1.9")
 }
 
 allprojects {
@@ -45,4 +48,20 @@ pluginBundle {
     website = "https://github.com/guidovezzoni/smart-properties"
     vcsUrl = "https://github.com/guidovezzoni/smart-properties.git"
     tags = listOf("properties", "environment variables", "android", "buildconfig", "resources")
+}
+
+tasks.test {
+    useJUnitPlatform()  // JUnit5
+
+    testLogging {
+        // if you want to log all events, use events = TestLogEvent.values().toSet()
+        events = setOf(
+            TestLogEvent.STARTED,
+            TestLogEvent.PASSED,
+            TestLogEvent.FAILED
+        )
+        // show standard out and standard error of the test
+        // JVM(s) on the console
+        showStandardStreams = true
+    }
 }
