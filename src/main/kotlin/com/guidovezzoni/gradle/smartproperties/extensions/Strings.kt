@@ -30,3 +30,11 @@ fun String.cleanUpTokens(): String {
     return this.replace(BUILDCONFIG_TOKEN, "")
         .replace(RESOURCES_TOKEN, "")
 }
+
+fun String.toConstantSyntax(): String {
+    return this
+        .replace("([^_])([A-Z])".toRegex(), "$1_$2")
+        .replace("([A-Za-z])([0-9])".toRegex(), "$1_$2")
+        .replace("([0-9])([A-Za-z])".toRegex(), "$1_$2")
+        .toUpperCase()
+}

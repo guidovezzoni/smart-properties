@@ -9,6 +9,7 @@ fun ConfigScriptExtension.getConfigurationForVariant(androidVariant: Application
     var flavorName: String? = null
     var sourceFile: File? = null
     var ciEnvironmentPrefix: String? = null
+    var ignoreBuildConfigSyntax: Boolean? = null
 
     productFlavors?.forEach { productFlavor ->
         if (productFlavor.name.equals(androidVariant.flavorName)) {
@@ -16,6 +17,7 @@ fun ConfigScriptExtension.getConfigurationForVariant(androidVariant: Application
             flavorName = productFlavor.name
             sourceFile = productFlavor.sourceFile
             ciEnvironmentPrefix = productFlavor.ciEnvironmentPrefix
+            ignoreBuildConfigSyntax = productFlavor.ignoreBuildConfigSyntax
         }
     }
 
@@ -23,6 +25,7 @@ fun ConfigScriptExtension.getConfigurationForVariant(androidVariant: Application
         androidVariant.name,
         flavorName ?: "",
         sourceFile ?: getDefaultConfigSourceFile(),
-        ciEnvironmentPrefix ?: getDefaultConfigCiEnvironmentPrefix()
+        ciEnvironmentPrefix ?: getDefaultConfigCiEnvironmentPrefix(),
+        ignoreBuildConfigSyntax ?: getDefaultConfigIgnoreBuildConfigSyntax()
     )
 }

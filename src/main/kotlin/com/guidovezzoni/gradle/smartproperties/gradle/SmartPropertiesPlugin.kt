@@ -42,7 +42,7 @@ class SmartPropertiesPlugin : Plugin<Project> {
                         GenerateBuildConfigSmartPropertiesTask::class.java
                     ) { task ->
                         task.entries = smartProperties
-                        task.flavorName = androidVariant.flavorName
+                        task.variantInfo = variantInfo
                     }
                 androidVariant.generateBuildConfigProvider.get().dependsOn(generateBuildConfigTask)
 
@@ -51,7 +51,7 @@ class SmartPropertiesPlugin : Plugin<Project> {
                     GenerateResourcesSmartProperties::class.java
                 ) { task ->
                     task.entries = smartProperties
-                    task.flavorName = androidVariant.flavorName
+                    task.variantInfo = variantInfo
                 }
                 // Not sure resources generation should depend on BuildConfig task, but it works correctly for now
                 // TODO I need to identify the proper task

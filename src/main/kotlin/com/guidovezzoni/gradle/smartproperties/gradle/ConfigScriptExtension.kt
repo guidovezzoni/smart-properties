@@ -43,9 +43,14 @@ open class ConfigScriptExtension(private val project: Project) {
         return defaultConfig?.ciEnvironmentPrefix ?: DEFAULT_CI_ENV_PREFIX
     }
 
+    fun getDefaultConfigIgnoreBuildConfigSyntax(): Boolean {
+        return defaultConfig?.ignoreBuildConfigSyntax ?: DEFAULT_IGNORE_BUILD_CONFIG_SYNTAX
+    }
+
     companion object {
         const val DEFAULT_FILENAME = "smart.properties"
         const val DEFAULT_CI_ENV_PREFIX = ""
+        const val DEFAULT_IGNORE_BUILD_CONFIG_SYNTAX = false
         const val EXTENSION_NAME = "smartPropertiesPlugin"
     }
 }

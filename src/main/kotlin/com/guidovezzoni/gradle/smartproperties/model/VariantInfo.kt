@@ -9,5 +9,6 @@ data class VariantInfo(
     val androidVariantName: String,
     val productFlavorName: String,
     val sourceFile: File,
-    val ciEnvironmentPrefix: String
+    val ciEnvironmentPrefix: String,
+    val ignoreBuildConfigSyntax: Boolean
 )
