@@ -3,7 +3,6 @@ package com.guidovezzoni.gradle.smartproperties.extensions
 import com.android.build.gradle.internal.dsl.BaseFlavor
 import com.android.build.gradle.internal.dsl.ProductFlavor
 import com.android.build.gradle.internal.errors.DeprecationReporter
-import io.mockk.junit5.MockKExtension
 import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verify
@@ -12,10 +11,7 @@ import org.gradle.api.logging.Logger
 import org.gradle.testfixtures.ProjectBuilder
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
-
-@ExtendWith(MockKExtension::class)
 internal class BaseFlavorKtTest {
     private lateinit var project: Project
     private lateinit var baseFlavourSpy: BaseFlavor
