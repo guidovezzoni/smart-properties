@@ -48,7 +48,7 @@ class SmartPropertiesPlugin : Plugin<Project> {
 
                 val generateResourcesTask = project.tasks.create(
                     "generate${taskVariantName}ResourcesSmartProperties",
-                    GenerateResourcesSmartProperties::class.java
+                    GenerateResourcesSmartPropertiesTask::class.java
                 ) { task ->
                     task.entries = smartProperties
                     task.flavorName = androidVariant.flavorName
