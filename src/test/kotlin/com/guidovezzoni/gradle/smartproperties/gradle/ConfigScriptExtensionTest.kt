@@ -2,26 +2,38 @@ package com.guidovezzoni.gradle.smartproperties.gradle
 
 import com.guidovezzoni.gradle.smartproperties.exceptions.InvalidConfigurationException
 import groovy.lang.Closure
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import io.mockk.junit5.MockKExtension
+import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder
 import org.junit.jupiter.api.*
+import org.junit.jupiter.api.extension.ExtendWith
 import java.io.File
 
+@ExtendWith(MockKExtension::class)
 internal open class ConfigScriptExtensionTest {
+    val project : Project = ProjectBuilder.builder().build()
     lateinit var sut: ConfigScriptExtension
 
+    @MockK
+    lateinit var defaultConfig: ConfigScriptBlock
+
     @BeforeEach
-    internal fun setUp() {
-        val project = ProjectBuilder.builder().build()
+    internal open fun setUp() {
         sut = ConfigScriptExtension(project)
+
+        every { defaultConfig.name } returns null
+        every { defaultConfig.sourceFile } returns File(DEFAULT_CONFIG_FILE)
+        every { defaultConfig.ciEnvironmentPrefix } returns DEFAULT_CONFIG_PREFIX
     }
 
     @Test
-    fun `defaultConfig() when a default config is already present`() {
-        val configScriptBlock = ConfigScriptBlock("pre-existing")
-        sut.defaultConfig = configScriptBlock
+    fun `defaultConfig() throws an exception when a default config is already present`() {
+        sut.defaultConfig = defaultConfig
 
         val exception = assertThrows<InvalidConfigurationException> {
-            val defaultConfig = sut.defaultConfig(Closure.IDENTITY)
+            sut.defaultConfig(Closure.IDENTITY)
         }
 
         Assertions.assertEquals("Only one defaultConfig closure allowed", exception.message)
@@ -42,13 +54,11 @@ internal open class ConfigScriptExtensionTest {
 
     @Test
     fun `getDefaultConfigSourceFile with default block`() {
-        val configScriptBlock = ConfigScriptBlock("name")
-        configScriptBlock.sourceFile = File("in-existent file")
-        sut.defaultConfig = configScriptBlock
+        sut.defaultConfig = defaultConfig
 
         val actualFile = sut.getDefaultConfigSourceFile()
 
-        Assertions.assertEquals("in-existent file", actualFile.name)
+        Assertions.assertEquals(DEFAULT_CONFIG_FILE, actualFile.name)
     }
 
     @Test
@@ -60,12 +70,16 @@ internal open class ConfigScriptExtensionTest {
 
     @Test
     fun `getDefaultConfigCiEnvironmentPrefix with default block`() {
-        val configScriptBlock = ConfigScriptBlock("name")
-        configScriptBlock.ciEnvironmentPrefix = "a prefix"
-        sut.defaultConfig = configScriptBlock
+        sut.defaultConfig = defaultConfig
 
         val actualPrefix = sut.getDefaultConfigCiEnvironmentPrefix()
 
-        Assertions.assertEquals("a prefix", actualPrefix)
+        Assertions.assertEquals(DEFAULT_CONFIG_PREFIX, actualPrefix)
+    }
+
+    companion object {
+        const val DEFAULT_CONFIG_FILE = "default-config"
+        const val DEFAULT_CONFIG_PREFIX = "default_config_prefix"
+
     }
 }
