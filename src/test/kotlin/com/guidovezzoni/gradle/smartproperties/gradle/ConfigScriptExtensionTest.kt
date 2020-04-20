@@ -1,6 +1,5 @@
 package com.guidovezzoni.gradle.smartproperties.gradle
 
-import com.guidovezzoni.gradle.smartproperties.exceptions.InvalidConfigurationException
 import groovy.lang.Closure
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -32,7 +31,7 @@ internal open class ConfigScriptExtensionTest {
     fun `defaultConfig() throws an exception when a default config is already present`() {
         sut.defaultConfig = defaultConfig
 
-        val exception = assertThrows<InvalidConfigurationException> {
+        val exception = assertThrows<IllegalArgumentException> {
             sut.defaultConfig(Closure.IDENTITY)
         }
 
@@ -42,7 +41,7 @@ internal open class ConfigScriptExtensionTest {
     @Disabled("Not sure how to play with a Closure yet")
     @Test
     fun `defaultConfig()`() {
-
+        TODO("To be implemented")
     }
 
     @Test

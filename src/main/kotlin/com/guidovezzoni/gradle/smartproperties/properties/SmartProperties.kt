@@ -1,7 +1,5 @@
 package com.guidovezzoni.gradle.smartproperties.properties
 
-import com.guidovezzoni.gradle.smartproperties.exceptions.IllegalPropertyException
-import com.guidovezzoni.gradle.smartproperties.exceptions.InvalidConfigurationException
 import com.guidovezzoni.gradle.smartproperties.extensions.*
 import com.guidovezzoni.gradle.smartproperties.logger.CustomLogging
 import com.guidovezzoni.gradle.smartproperties.model.Type
@@ -16,7 +14,7 @@ class SmartProperties(private val ciPrefix: String) : HashMap<String, Pair<Strin
 
     fun load(file: File?) {
         if (file?.exists() != true) {
-            throw InvalidConfigurationException("No valid file for parameter sourceFile - ${file?.absoluteFile} not found")
+            throw IllegalArgumentException("No valid file for parameter sourceFile - ${file?.absoluteFile} not found")
         }
         val properties = Properties()
         properties.load(file.reader())
@@ -26,11 +24,11 @@ class SmartProperties(private val ciPrefix: String) : HashMap<String, Pair<Strin
             val valueString = propValue.toString()
 
             if (!keyString.hasKnownTokens()) {
-                throw IllegalPropertyException("Key $keyString doesn't have any token")
+                throw IllegalArgumentException("Key $keyString doesn't have any token")
             }
 
             if (keyString.hasUnknownTokens()) {
-                throw IllegalPropertyException("Key $keyString has unknown tokens")
+                throw IllegalArgumentException("Key $keyString has unknown tokens")
             }
 
             val finalValue = getEnvVar(keyString.cleanUpTokens(), ciPrefix) ?: valueString

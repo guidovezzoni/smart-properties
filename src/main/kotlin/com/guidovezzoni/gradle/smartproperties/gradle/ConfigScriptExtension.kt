@@ -1,6 +1,5 @@
 package com.guidovezzoni.gradle.smartproperties.gradle
 
-import com.guidovezzoni.gradle.smartproperties.exceptions.InvalidConfigurationException
 import com.guidovezzoni.gradle.smartproperties.logger.CustomLogging
 import groovy.lang.Closure
 import org.gradle.api.Action
@@ -20,7 +19,7 @@ open class ConfigScriptExtension(private val project: Project) {
     @Suppress("unused")
     fun defaultConfig(defaultDef: Closure<*>): ConfigScriptBlock? {
         if (defaultConfig != null) {
-            throw InvalidConfigurationException("Only one defaultConfig closure allowed")
+            throw IllegalArgumentException("Only one defaultConfig closure allowed")
         }
         defaultConfig = ConfigScriptBlock()
 
