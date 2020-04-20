@@ -17,6 +17,10 @@ dependencies {
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
     testImplementation("io.mockk:mockk:1.9")
+
+//    "functionalTestImplementation"("org.junit.jupiter:junit-jupiter:5.6.2")
+
+    testImplementation(gradleTestKit())
 }
 
 allprojects {
@@ -34,7 +38,7 @@ gradlePlugin {
         create("smartPropertiesPlugin") {
             id = "com.guidovezzoni.smartproperties"
             group = "com.guidovezzoni.smartproperties"
-            version = "0.4.0-beta"
+            version = "0.4.1-local"
             @Suppress("UnstableApiUsage")
             displayName = "Smart Properties Plugin"
             @Suppress("UnstableApiUsage")
@@ -65,3 +69,38 @@ tasks.test {
         showStandardStreams = true
     }
 }
+
+/*
+// Add a source set for the functional test suite
+// https://github.com/gradle/gradle/blob/master/subprojects/docs/src/samples/gradle-plugin/kotlin/build.gradle.kts
+val functionalTestSourceSet = sourceSets.create("functionalTest") {
+//    compileClasspath += sourceSets.main.output + configurations.testCompile
+//    runtimeClasspath += output + compileClasspath + configurations.testRuntime
+    compileClasspath += sourceSets.main.get().output
+    runtimeClasspath += sourceSets.main.get().output
+
+}
+
+gradlePlugin.testSourceSets(functionalTestSourceSet)
+
+// Add a task to run the functional tests
+val functionalTest by tasks.creating(Test::class) {
+    testClassesDirs = functionalTestSourceSet.output.classesDirs
+    classpath = functionalTestSourceSet.runtimeClasspath
+}
+
+val check by tasks.getting(Task::class) {
+    // Run the functional tests as part of `check`
+    dependsOn(functionalTest)
+}
+
+gradlePlugin {
+    testSourceSets(sourceSets["functionalTest"])
+//    testSourceSets(functionalTestSourceSet)
+}
+
+dependencies {
+    "functionalTestImplementation"("org.junit.jupiter:junit-jupiter:5.6.2")
+    "functionalTestImplementation"("io.mockk:mockk:1.9")
+}
+*/
