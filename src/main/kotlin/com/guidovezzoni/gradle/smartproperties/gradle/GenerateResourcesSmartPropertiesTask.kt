@@ -5,7 +5,7 @@ import com.guidovezzoni.gradle.smartproperties.extensions.resValueString
 import com.guidovezzoni.gradle.smartproperties.gradle.base.SmartPropertiesBaseTask
 import com.guidovezzoni.gradle.smartproperties.model.Type
 
-open class GenerateResourcesSmartProperties : SmartPropertiesBaseTask() {
+open class GenerateResourcesSmartPropertiesTask : SmartPropertiesBaseTask() {
     override fun performFlavorOperation(
         productFlavor: ProductFlavor,
         key: String,

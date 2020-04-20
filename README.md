@@ -10,7 +10,6 @@ Features:
    *  BUILDCONFIG.java
    *  resources
   
-  
 # Example
 Given this sample file `smart.properties` in the root folder of the project:
 ```groovy
@@ -37,13 +36,12 @@ public final class BuildConfig {
 ``` 
 
 Additionally, any of the above properties can be easily overridden by defining two types of environment variables:
-*  [propertyName]=[new value] -  this can simply be defined on any machine 
-*  [prefix_propertyName]=[new value] - same as above, the prefix is a general parameter, this is typically used on CI integration
+*  (propertyName)=(new value) -  this can simply be defined on any machine 
+*  (prefix_propertyName)=(new value) - same as above, the prefix is a general parameter, this is typically used on CI integration
 
 Setting up appropriately `prefix`, the property can be overridden on local machines or CI.
 
 Please note: the prefixed variable always has a higher priority.
-
 
 # Usage
 
