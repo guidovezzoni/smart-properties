@@ -5,6 +5,7 @@ const val RESOURCES_TOKEN = ".Resources"
 
 const val DOUBLE_QUOTE = "\""
 const val DOT = "."
+const val REPLACEMENT_PATTERN = "$1_$2"
 
 fun String.isBuildConfigProperty(): Boolean {
     return contains(BUILDCONFIG_TOKEN)
@@ -33,8 +34,8 @@ fun String.cleanUpTokens(): String {
 
 fun String.toConstantSyntax(): String {
     return this
-        .replace("([^_])([A-Z])".toRegex(), "$1_$2")
-        .replace("([A-Za-z])([0-9])".toRegex(), "$1_$2")
-        .replace("([0-9])([A-Za-z])".toRegex(), "$1_$2")
+        .replace("([a-z])([A-Z])".toRegex(), REPLACEMENT_PATTERN)
+        .replace("([A-Za-z])([0-9])".toRegex(), REPLACEMENT_PATTERN)
+        .replace("([0-9])([A-Za-z])".toRegex(), REPLACEMENT_PATTERN)
         .toUpperCase()
 }

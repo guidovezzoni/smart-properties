@@ -46,7 +46,7 @@ internal class BaseFlavorKtTest {
     fun `when buildConfigFieldString with syntax is called buildConfigField is called`() {
         baseFlavourSpy.buildConfigFieldString(KEY, VALUE, false)
 
-        verify { baseFlavourSpy.buildConfigField("String", KEY, VALUE.toConstantSyntax()) }
+        verify { baseFlavourSpy.buildConfigField("String", KEY.toConstantSyntax(), VALUE) }
     }
 
     @Test

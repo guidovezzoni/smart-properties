@@ -94,27 +94,37 @@ class StringsKtTest {
     }
 
     @Test
-    fun `constValSyntax returns a reformatted string`() {
-        // add underscore before capital letter - unless there is one already
+    fun `constValSyntax returns a reformatted string add underscore before capital letter - unless there is one already`() {
         assertEquals("TEST_PROPERTY", "testProperty".toConstantSyntax())
         assertEquals("TEST_PROPERTY", "test_Property".toConstantSyntax())
         assertEquals("PROPERTY", "property".toConstantSyntax())
+    }
 
-        // add underscore between a letter and a number - unless there is one already
+    @Test
+    fun `constValSyntax returns a reformatted string - add underscore between a letter and a number - unless there is one already`() {
         assertEquals("TEST_PROPERTY_01", "testProperty01".toConstantSyntax())
         assertEquals("TEST_PROPERTY_01", "testProperty_01".toConstantSyntax())
         assertEquals("TEST_PROPERT_Y_01", "testPropertY01".toConstantSyntax())
         assertEquals("TEST_PROPERT_Y_01", "testPropertY_01".toConstantSyntax())
+    }
 
-        // add underscore between a number and a letter - unless there is one already
+    @Test
+    fun `constValSyntax returns a reformatted string - add underscore between a number and a letter - unless there is one already`() {
         assertEquals("01_PROPERTY", "01Property".toConstantSyntax())
         assertEquals("01_PROPERTY", "01_Property".toConstantSyntax())
         assertEquals("01_PROPERTY", "01property".toConstantSyntax())
         assertEquals("01_PROPERTY", "01_property".toConstantSyntax())
+    }
 
-        // multiple underscores are left unchanged
+    @Test
+    fun `constValSyntax returns a reformatted string - multiple underscores are left unchanged`() {
         assertEquals("TEST__PROPERTY_2_UNDERSCORE", "test__Property2underscore".toConstantSyntax())
         assertEquals("TEST___PROPERTY_3_UNDERSCORE", "test___Property3Underscore".toConstantSyntax())
+    }
+
+    @Test
+    fun `constValSyntax returns a reformatted string multiple uppercase letters are left unchanged`() {
+        assertEquals("TEST_PROPERTY", "TEST_PROPERTY".toConstantSyntax())
     }
 
     companion object {

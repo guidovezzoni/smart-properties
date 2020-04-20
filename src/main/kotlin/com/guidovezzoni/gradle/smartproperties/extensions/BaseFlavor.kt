@@ -5,12 +5,11 @@ import com.android.build.gradle.internal.dsl.BaseFlavor
 const val BUILDCONFIG_STRING_TOKEN = "String"
 const val RESVALUE_STRING_TOKEN = "string"
 
-//todo capitalise the name
 fun BaseFlavor.buildConfigFieldString(name: String, value: String, ignoreBuildConfigSyntax: Boolean) {
     this.buildConfigField(
         BUILDCONFIG_STRING_TOKEN,
-        name,
-        if (ignoreBuildConfigSyntax) value else value.toConstantSyntax()
+        if (ignoreBuildConfigSyntax) name else name.toConstantSyntax(),
+        value
     )
 }
 
