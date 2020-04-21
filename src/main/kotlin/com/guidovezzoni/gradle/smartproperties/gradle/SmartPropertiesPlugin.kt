@@ -1,6 +1,5 @@
 package com.guidovezzoni.gradle.smartproperties.gradle
 
-import com.guidovezzoni.gradle.smartproperties.exceptions.InvalidConfigurationException
 import com.guidovezzoni.gradle.smartproperties.extensions.getAndroid
 import com.guidovezzoni.gradle.smartproperties.extensions.getConfigurationForVariant
 import com.guidovezzoni.gradle.smartproperties.logger.CustomLogging
@@ -48,7 +47,7 @@ class SmartPropertiesPlugin : Plugin<Project> {
 
                 val generateResourcesTask = project.tasks.create(
                     "generate${taskVariantName}ResourcesSmartProperties",
-                    GenerateResourcesSmartProperties::class.java
+                    GenerateResourcesSmartPropertiesTask::class.java
                 ) { task ->
                     task.entries = smartProperties
                     task.variantInfo = variantInfo
@@ -57,7 +56,7 @@ class SmartPropertiesPlugin : Plugin<Project> {
                 // TODO I need to identify the proper task
                 androidVariant.generateBuildConfigProvider.get().dependsOn(generateResourcesTask)
             } else {
-                throw InvalidConfigurationException("Cannot find generateBuildConfigTask")
+                throw IllegalArgumentException("Cannot find generateBuildConfigTask")
             }
         }
     }

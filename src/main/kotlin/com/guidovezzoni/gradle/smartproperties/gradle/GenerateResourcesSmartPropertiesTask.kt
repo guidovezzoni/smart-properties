@@ -6,7 +6,7 @@ import com.guidovezzoni.gradle.smartproperties.gradle.base.SmartPropertiesBaseTa
 import com.guidovezzoni.gradle.smartproperties.model.Type
 import com.guidovezzoni.gradle.smartproperties.model.VariantInfo
 
-open class GenerateResourcesSmartProperties : SmartPropertiesBaseTask() {
+open class GenerateResourcesSmartPropertiesTask : SmartPropertiesBaseTask() {
     override fun performFlavorOperation(
         productFlavor: ProductFlavor,
         variantInfo: VariantInfo,
