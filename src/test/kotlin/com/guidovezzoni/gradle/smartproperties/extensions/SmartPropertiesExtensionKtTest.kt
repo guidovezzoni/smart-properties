@@ -46,9 +46,9 @@ internal class SmartPropertiesExtensionKtTest : ConfigScriptExtensionTest() {
 
         assertEquals(ANDROID_VARIANT_NAME, variantInfo.androidVariantName)
         assertEquals("", variantInfo.productFlavorName)
-        assertEquals(ConfigScriptExtension.DEFAULT_FILENAME, variantInfo.sourceFile.name)
-        assertEquals(ConfigScriptExtension.DEFAULT_CI_ENV_PREFIX, variantInfo.ciEnvironmentPrefix)
-        assertEquals(ConfigScriptExtension.DEFAULT_IGNORE_BUILD_CONFIG_SYNTAX, variantInfo.ignoreBuildConfigSyntax)
+        assertEquals(DEFAULT_FILENAME, variantInfo.sourceFile.name)
+        assertEquals(DEFAULT_CI_ENV_PREFIX, variantInfo.ciEnvironmentPrefix)
+        assertEquals(DEFAULT_IGNORE_BUILD_CONFIG_SYNTAX, variantInfo.ignoreBuildConfigSyntax)
     }
 
     @Test
@@ -107,5 +107,9 @@ internal class SmartPropertiesExtensionKtTest : ConfigScriptExtensionTest() {
         const val DEV_CONFIG_FILE = "dev.properties"
         const val DEV_CONFIG_PREFIX = "pref-dev-"
         const val DEV_CONFIG_IGNORE_SYNTAX = true
+
+        const val DEFAULT_FILENAME = "smart.properties"
+        const val DEFAULT_CI_ENV_PREFIX = ""
+        const val DEFAULT_IGNORE_BUILD_CONFIG_SYNTAX = false
     }
 }

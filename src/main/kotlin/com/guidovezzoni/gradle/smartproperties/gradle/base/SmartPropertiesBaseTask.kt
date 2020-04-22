@@ -40,7 +40,7 @@ abstract class SmartPropertiesBaseTask : DefaultTask() {
         val android = project.getAndroid()
 
         val productFlavor = android.productFlavors.find { productFlavor ->
-            productFlavor.name == variantInfo.productFlavorName  //test this
+            productFlavor.name == variantInfo.productFlavorName
         }
 
         entries.forEach { entry ->

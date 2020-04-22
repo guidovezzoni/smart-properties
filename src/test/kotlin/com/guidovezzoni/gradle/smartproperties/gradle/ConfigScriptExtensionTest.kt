@@ -12,7 +12,7 @@ import java.io.File
 
 @ExtendWith(MockKExtension::class)
 internal open class ConfigScriptExtensionTest {
-    val project : Project = ProjectBuilder.builder().build()
+    val project: Project = ProjectBuilder.builder().build()
     lateinit var sut: ConfigScriptExtension
 
     @MockK
@@ -43,38 +43,6 @@ internal open class ConfigScriptExtensionTest {
     @Test
     fun `defaultConfig()`() {
         TODO("To be implemented")
-    }
-
-    @Test
-    fun `getDefaultConfigSourceFile without default block`() {
-        val actualFile = sut.getDefaultConfigSourceFile()
-
-        Assertions.assertEquals("smart.properties", actualFile.name)
-    }
-
-    @Test
-    fun `getDefaultConfigSourceFile with default block`() {
-        sut.defaultConfig = defaultConfig
-
-        val actualFile = sut.getDefaultConfigSourceFile()
-
-        Assertions.assertEquals(DEFAULT_CONFIG_FILE, actualFile.name)
-    }
-
-    @Test
-    fun `getDefaultConfigCiEnvironmentPrefix without default block`() {
-        val actualPrefix = sut.getDefaultConfigCiEnvironmentPrefix()
-
-        Assertions.assertEquals("", actualPrefix)
-    }
-
-    @Test
-    fun `getDefaultConfigCiEnvironmentPrefix with default block`() {
-        sut.defaultConfig = defaultConfig
-
-        val actualPrefix = sut.getDefaultConfigCiEnvironmentPrefix()
-
-        Assertions.assertEquals(DEFAULT_CONFIG_PREFIX, actualPrefix)
     }
 
     companion object {
