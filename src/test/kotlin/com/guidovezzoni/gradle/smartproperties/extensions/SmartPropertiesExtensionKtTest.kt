@@ -32,10 +32,12 @@ internal class SmartPropertiesExtensionKtTest : ConfigScriptExtensionTest() {
         var aFlavor = flavors.create("alpha")
         aFlavor.sourceFile = File("alpha.properties")
         aFlavor.ciEnvironmentPrefix = "pref-alpha-"
+        aFlavor.ignoreBuildConfigSyntax = true
 
         aFlavor = flavors.create("beta")
         aFlavor.sourceFile = File("beta.properties")
         aFlavor.ciEnvironmentPrefix = "pref-beta-"
+        aFlavor.ignoreBuildConfigSyntax = true
     }
 
     @Test
@@ -46,6 +48,7 @@ internal class SmartPropertiesExtensionKtTest : ConfigScriptExtensionTest() {
         assertEquals("", variantInfo.productFlavorName)
         assertEquals(ConfigScriptExtension.DEFAULT_FILENAME, variantInfo.sourceFile.name)
         assertEquals(ConfigScriptExtension.DEFAULT_CI_ENV_PREFIX, variantInfo.ciEnvironmentPrefix)
+        assertEquals(ConfigScriptExtension.DEFAULT_IGNORE_BUILD_CONFIG_SYNTAX, variantInfo.ignoreBuildConfigSyntax)
     }
 
     @Test
@@ -58,6 +61,7 @@ internal class SmartPropertiesExtensionKtTest : ConfigScriptExtensionTest() {
         assertEquals("", variantInfo.productFlavorName)
         assertEquals(DEFAULT_CONFIG_FILE, variantInfo.sourceFile.name)
         assertEquals(DEFAULT_CONFIG_PREFIX, variantInfo.ciEnvironmentPrefix)
+        assertEquals(DEFAULT_CONFIG_IGNORE_SYNTAX, variantInfo.ignoreBuildConfigSyntax)
     }
 
     @Test
@@ -67,6 +71,7 @@ internal class SmartPropertiesExtensionKtTest : ConfigScriptExtensionTest() {
         val aFlavor = flavors.create(DEV_CONFIG_NAME)
         aFlavor.sourceFile = File(DEV_CONFIG_FILE)
         aFlavor.ciEnvironmentPrefix = DEV_CONFIG_PREFIX
+        aFlavor.ignoreBuildConfigSyntax = DEV_CONFIG_IGNORE_SYNTAX
         sut.productFlavors = flavors
 
         val variantInfo = sut.getConfigurationForVariant(androidVariant)
@@ -75,6 +80,7 @@ internal class SmartPropertiesExtensionKtTest : ConfigScriptExtensionTest() {
         assertEquals(DEV_CONFIG_NAME, variantInfo.productFlavorName)
         assertEquals(DEV_CONFIG_FILE, variantInfo.sourceFile.name)
         assertEquals(DEV_CONFIG_PREFIX, variantInfo.ciEnvironmentPrefix)
+        assertEquals(DEV_CONFIG_IGNORE_SYNTAX, variantInfo.ignoreBuildConfigSyntax)
     }
 
     @Test
@@ -90,6 +96,7 @@ internal class SmartPropertiesExtensionKtTest : ConfigScriptExtensionTest() {
         assertEquals(DEV_CONFIG_NAME, variantInfo.productFlavorName)
         assertEquals(DEFAULT_CONFIG_FILE, variantInfo.sourceFile.name)
         assertEquals(DEFAULT_CONFIG_PREFIX, variantInfo.ciEnvironmentPrefix)
+        assertEquals(DEFAULT_CONFIG_IGNORE_SYNTAX, variantInfo.ignoreBuildConfigSyntax)
     }
 
     companion object {
@@ -99,5 +106,6 @@ internal class SmartPropertiesExtensionKtTest : ConfigScriptExtensionTest() {
         const val DEV_CONFIG_NAME = "dev"
         const val DEV_CONFIG_FILE = "dev.properties"
         const val DEV_CONFIG_PREFIX = "pref-dev-"
+        const val DEV_CONFIG_IGNORE_SYNTAX = true
     }
 }
