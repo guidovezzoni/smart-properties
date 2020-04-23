@@ -93,6 +93,40 @@ class StringsKtTest {
         assertEquals(PROPERTY_1, actualValue)
     }
 
+    @Test
+    fun `constValSyntax returns a reformatted string add underscore before capital letter - unless there is one already`() {
+        assertEquals("TEST_PROPERTY", "testProperty".toConstantSyntax())
+        assertEquals("TEST_PROPERTY", "test_Property".toConstantSyntax())
+        assertEquals("PROPERTY", "property".toConstantSyntax())
+    }
+
+    @Test
+    fun `constValSyntax returns a reformatted string - add underscore between a letter and a number - unless there is one already`() {
+        assertEquals("TEST_PROPERTY_01", "testProperty01".toConstantSyntax())
+        assertEquals("TEST_PROPERTY_01", "testProperty_01".toConstantSyntax())
+        assertEquals("TEST_PROPERT_Y_01", "testPropertY01".toConstantSyntax())
+        assertEquals("TEST_PROPERT_Y_01", "testPropertY_01".toConstantSyntax())
+    }
+
+    @Test
+    fun `constValSyntax returns a reformatted string - add underscore between a number and a letter - unless there is one already`() {
+        assertEquals("01_PROPERTY", "01Property".toConstantSyntax())
+        assertEquals("01_PROPERTY", "01_Property".toConstantSyntax())
+        assertEquals("01_PROPERTY", "01property".toConstantSyntax())
+        assertEquals("01_PROPERTY", "01_property".toConstantSyntax())
+    }
+
+    @Test
+    fun `constValSyntax returns a reformatted string - multiple underscores are left unchanged`() {
+        assertEquals("TEST__PROPERTY_2_UNDERSCORE", "test__Property2underscore".toConstantSyntax())
+        assertEquals("TEST___PROPERTY_3_UNDERSCORE", "test___Property3Underscore".toConstantSyntax())
+    }
+
+    @Test
+    fun `constValSyntax returns a reformatted string multiple uppercase letters are left unchanged`() {
+        assertEquals("TEST_PROPERTY", "TEST_PROPERTY".toConstantSyntax())
+    }
+
     companion object {
         const val PROPERTY_1 = "Property1"
         const val PROPERTY_2_BUILD_CONFIG = "Property2.BuildConfig"

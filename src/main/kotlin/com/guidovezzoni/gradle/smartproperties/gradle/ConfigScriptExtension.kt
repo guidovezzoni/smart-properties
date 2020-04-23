@@ -5,7 +5,6 @@ import groovy.lang.Closure
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
-import java.io.File
 
 /**
  * Extension class for plugin configuration
@@ -34,17 +33,7 @@ open class ConfigScriptExtension(private val project: Project) {
         action.execute(productFlavors)
     }
 
-    fun getDefaultConfigSourceFile(): File {
-        return defaultConfig?.sourceFile ?: File(DEFAULT_FILENAME)
-    }
-
-    fun getDefaultConfigCiEnvironmentPrefix(): String {
-        return defaultConfig?.ciEnvironmentPrefix ?: DEFAULT_CI_ENV_PREFIX
-    }
-
     companion object {
-        const val DEFAULT_FILENAME = "smart.properties"
-        const val DEFAULT_CI_ENV_PREFIX = ""
         const val EXTENSION_NAME = "smartPropertiesPlugin"
     }
 }

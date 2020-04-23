@@ -6,7 +6,7 @@ repositories {
 }
 
 plugins {
-    kotlin("jvm") version "1.3.70"
+    kotlin("jvm") version "1.3.72"
     id("java-gradle-plugin")
     id("com.gradle.plugin-publish") version "0.11.0"
     `maven-publish`

@@ -4,6 +4,7 @@ import com.android.build.gradle.internal.dsl.ProductFlavor
 import com.guidovezzoni.gradle.smartproperties.extensions.getAndroid
 import com.guidovezzoni.gradle.smartproperties.logger.CustomLogging
 import com.guidovezzoni.gradle.smartproperties.model.Type
+import com.guidovezzoni.gradle.smartproperties.model.VariantInfo
 import com.guidovezzoni.gradle.smartproperties.properties.SmartProperties
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Internal
@@ -20,7 +21,7 @@ abstract class SmartPropertiesBaseTask : DefaultTask() {
     internal lateinit var entries: SmartProperties
 
     @get:Internal
-    internal lateinit var flavorName: String
+    internal lateinit var variantInfo: VariantInfo
 
     init {
         replaceLogger(CustomLogging.getLogger(SmartPropertiesBaseTask::class.java))
@@ -28,6 +29,7 @@ abstract class SmartPropertiesBaseTask : DefaultTask() {
 
     abstract fun performFlavorOperation(
         productFlavor: ProductFlavor,
+        variantInfo: VariantInfo,
         key: String,
         doubleQuotedValue: String,
         types: Set<Type>
@@ -38,12 +40,12 @@ abstract class SmartPropertiesBaseTask : DefaultTask() {
         val android = project.getAndroid()
 
         val productFlavor = android.productFlavors.find { productFlavor ->
-            productFlavor.name == flavorName
+            productFlavor.name == variantInfo.productFlavorName
         }
 
         entries.forEach { entry ->
             productFlavor?.let { flavor ->
-                performFlavorOperation(flavor, entry.key, entry.value.first, entry.value.second)
+                performFlavorOperation(flavor, variantInfo, entry.key, entry.value.first, entry.value.second)
             }
         }
     }
