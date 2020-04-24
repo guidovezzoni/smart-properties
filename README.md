@@ -124,7 +124,7 @@ Latest version: 0.4.0-beta
 | 0.2.0_beta  | 15/03/2020 |               | First beta release                         |
 
 # Licence
-```
+```plaintext
    Copyright 2020 Guido Vezzoni
 
    Licensed under the Apache License, Version 2.0 (the "License");
