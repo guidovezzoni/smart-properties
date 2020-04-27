@@ -115,13 +115,14 @@ smartPropertiesPlugin {
 
 # Version History
 
-Latest version: 0.4.0-beta
+Latest version: 0.5.0-beta
 
 | Version     | Date       | Issues        | Notes                                      |
 |:------------|:-----------|:--------------|:-------------------------------------------|
-| 0.4.0_beta  | 16/04/2020 |               | flavors support, logger, unit test         |
-| 0.3.0_beta  | 28/03/2020 |               | env var support, Project renamed           |
-| 0.2.0_beta  | 15/03/2020 |               | First beta release                         |
+| 0.5.0-beta  | 28/04/2020 | 003 (additional unit tests), 004 (keep property syntax) | |
+| 0.4.0_beta  | 16/04/2020 | flavors support, logger, unit test | |
+| 0.3.0_beta  | 28/03/2020 |  env var support, Project renamed | |
+| 0.2.0_beta  | 15/03/2020 | | First beta release |
 
 # Licence
 ```
