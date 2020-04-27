@@ -15,7 +15,7 @@ open class GenerateResourcesSmartPropertiesTask : SmartPropertiesBaseTask() {
         types: Set<Type>
     ) {
         if (types.contains(Type.RESOURCES)) {
-            productFlavor.resValueString(key, doubleQuotedValue)
+            productFlavor.resValueString(key, doubleQuotedValue, variantInfo.keepPropertySyntax)
             logger.debug("RESVALUE String added $key")
         }
     }

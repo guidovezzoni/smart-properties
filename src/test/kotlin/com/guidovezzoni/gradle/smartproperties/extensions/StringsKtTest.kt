@@ -94,37 +94,59 @@ class StringsKtTest {
     }
 
     @Test
-    fun `constValSyntax returns a reformatted string add underscore before capital letter - unless there is one already`() {
-        assertEquals("TEST_PROPERTY", "testProperty".toConstantSyntax())
-        assertEquals("TEST_PROPERTY", "test_Property".toConstantSyntax())
-        assertEquals("PROPERTY", "property".toConstantSyntax())
+    fun `addUnderscoreBetweenWords adds an underscore between a lowercase letter is followed by a uppercase letter`() {
+        assertEquals("test_Property", "testProperty".addUnderscoreBetweenWords())
+        assertEquals("property", "property".addUnderscoreBetweenWords())
     }
 
     @Test
-    fun `constValSyntax returns a reformatted string - add underscore between a letter and a number - unless there is one already`() {
-        assertEquals("TEST_PROPERTY_01", "testProperty01".toConstantSyntax())
-        assertEquals("TEST_PROPERTY_01", "testProperty_01".toConstantSyntax())
-        assertEquals("TEST_PROPERT_Y_01", "testPropertY01".toConstantSyntax())
-        assertEquals("TEST_PROPERT_Y_01", "testPropertY_01".toConstantSyntax())
+    fun `addUnderscoreBetweenWords adds an underscore between a letter and a number`() {
+        // lowercase
+        assertEquals("test_Property_01", "testProperty01".addUnderscoreBetweenWords())
+        // uppercase
+        assertEquals("test_Propert_Y_01", "testPropertY01".addUnderscoreBetweenWords())
     }
 
     @Test
-    fun `constValSyntax returns a reformatted string - add underscore between a number and a letter - unless there is one already`() {
-        assertEquals("01_PROPERTY", "01Property".toConstantSyntax())
-        assertEquals("01_PROPERTY", "01_Property".toConstantSyntax())
-        assertEquals("01_PROPERTY", "01property".toConstantSyntax())
-        assertEquals("01_PROPERTY", "01_property".toConstantSyntax())
+    fun `addUnderscoreBetweenWords adds an underscore between a number and a letter`() {
+        assertEquals("01_Property", "01Property".addUnderscoreBetweenWords())
+        assertEquals("01_property", "01property".addUnderscoreBetweenWords())
     }
 
     @Test
-    fun `constValSyntax returns a reformatted string - multiple underscores are left unchanged`() {
-        assertEquals("TEST__PROPERTY_2_UNDERSCORE", "test__Property2underscore".toConstantSyntax())
-        assertEquals("TEST___PROPERTY_3_UNDERSCORE", "test___Property3Underscore".toConstantSyntax())
+    fun `addUnderscoreBetweenWords - corner case - existing underscores are left unchanged`() {
+        // corner case - existing underscore
+        assertEquals("test_Property", "test_Property".addUnderscoreBetweenWords())
+        // corner case - existing underscore
+        assertEquals("test_Property_01", "testProperty_01".addUnderscoreBetweenWords())
+        // corner case - existing underscore
+        assertEquals("test_Propert_Y_01", "testPropertY_01".addUnderscoreBetweenWords())
+        // corner case - existing underscore
+        assertEquals("01_Property", "01_Property".addUnderscoreBetweenWords())
+        // corner case - existing underscore
+        assertEquals("01_property", "01_property".addUnderscoreBetweenWords())
+
     }
 
     @Test
-    fun `constValSyntax returns a reformatted string multiple uppercase letters are left unchanged`() {
-        assertEquals("TEST_PROPERTY", "TEST_PROPERTY".toConstantSyntax())
+    fun `addUnderscoreBetweenWords - corner case - multiple underscores are left unchanged`() {
+        assertEquals("test__Property_2_underscore", "test__Property2underscore".addUnderscoreBetweenWords())
+        assertEquals("test___Property_3_Underscore", "test___Property3Underscore".addUnderscoreBetweenWords())
+    }
+
+    @Test
+    fun `addUnderscoreBetweenWords - corner case - multiple uppercase letters are left unchanged`() {
+        assertEquals("TEST_PROPERTY", "TEST_PROPERTY".addUnderscoreBetweenWords())
+    }
+
+    @Test
+    fun `toXmlSyntax returns underscores and lowercase`() {
+        assertEquals("test_property_01_prop", "testProperty01prop".toXmlSyntax())
+    }
+
+    @Test
+    fun `toConstantSyntax returns underscores and uppercase`() {
+        assertEquals("TEST_PROPERTY_01_PROP", "testProperty01prop".toConstantSyntax())
     }
 
     companion object {

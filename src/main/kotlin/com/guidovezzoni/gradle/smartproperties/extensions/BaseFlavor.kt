@@ -13,6 +13,10 @@ fun BaseFlavor.buildConfigFieldString(name: String, value: String, keepPropertyS
     )
 }
 
-fun BaseFlavor.resValueString(name: String, value: String) {
-    this.resValue(RESVALUE_STRING_TOKEN, name, value)
+fun BaseFlavor.resValueString(name: String, value: String, keepPropertySyntax: Boolean) {
+    this.resValue(
+        RESVALUE_STRING_TOKEN,
+        if (keepPropertySyntax) name else name.toXmlSyntax(),
+        value
+    )
 }
