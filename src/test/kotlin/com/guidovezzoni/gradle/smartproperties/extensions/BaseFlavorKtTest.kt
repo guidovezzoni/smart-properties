@@ -32,28 +32,35 @@ internal class BaseFlavorKtTest {
     }
 
     @Test
-    fun `when buildConfigFieldString ignoring syntax is called buildConfigField is called`() {
+    fun `when buildConfigFieldString with dontRenameProperty is called buildConfigField is called`() {
         baseFlavourSpy.buildConfigFieldString(KEY, VALUE, true)
 
         verify { baseFlavourSpy.buildConfigField("String", KEY, VALUE) }
     }
 
     @Test
-    fun `when buildConfigFieldString with syntax is called buildConfigField is called`() {
+    fun `when buildConfigFieldString without dontRenameProperty is called buildConfigField is called`() {
         baseFlavourSpy.buildConfigFieldString(KEY, VALUE, false)
 
-        verify { baseFlavourSpy.buildConfigField("String", KEY.toConstantSyntax(), VALUE) }
+        verify { baseFlavourSpy.buildConfigField("String", "KEY_TEST", VALUE) }
     }
 
     @Test
-    fun `when resValueString is called resValue is called`() {
-        baseFlavourSpy.resValueString(KEY, VALUE)
+    fun `when resValueString with dontRenameProperty is called resValue is called`() {
+        baseFlavourSpy.resValueString(KEY, VALUE,true)
 
         verify { baseFlavourSpy.resValue("string", KEY, VALUE) }
     }
 
+    @Test
+    fun `when resValueString without dontRenameProperty is called resValue is called`() {
+        baseFlavourSpy.resValueString(KEY, VALUE,false)
+
+        verify { baseFlavourSpy.resValue("string", "key_test", VALUE) }
+    }
+
     companion object {
-        const val KEY = "key"
+        const val KEY = "keyTest"
         const val VALUE = "value"
     }
 }
