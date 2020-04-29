@@ -1,49 +1,84 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/2e39b28f9cea49c28bdd3cfd8318b5c2)](https://www.codacy.com/manual/guidovezzoni/smart-properties?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=guidovezzoni/smart-properties&amp;utm_campaign=Badge_Grade)
 
 # SmartPropertiesPlugin
-Manage build parameters from a *.property file or an environment variables
-
-The purpose of this library is to handle build parameters via a specific formatting of a `.properties` file.
-Features:
-*  the entries defined in the `.properties` file can be overridden by an environment variable, for example for CI integration
-*  the entries can automatically create entries in:
-   *  BUILDCONFIG.java
-   *  resources
-  
-# Example
-Given this sample file `smart.properties` in the root folder of the project:
+SmartPropertiesPlugin allow handling build parameters in a simpler way, removing some boiler plate code in gradle files.
+It allows the project to:
+* add a string entry in `BuildConfig.java`
+* add a resource string to `gradleResValues.xml`
+* override these values with an environment variables
+* have variant specific set of values
+   
+# Usage Example
+Here is a sample file `smart.properties` in the root folder of our project:
 ```groovy
 property01.BuildConfig=prop01
 property02.Resources=prop02
 property03.Resources.BuildConfig=prop03
 ```
-The plugin will perform the following actions:
+The `smart.property` file has the same structure as any `*.property` file: 
+typically it's composed by pair `key=value` or a `#commented out line` or an empty line.
+Keys have the usual *camelCase* naming convention followed by some extra tokens:
+* the `.BuildConfig` token will generate a BuildConfig entry
+* the `.Resources` token will generate a string resource entry
 
-1 **BUILDCONFIG**: generate this code in the sub-project BuildConfig
+Given the file above, the plugin modifies the `BuildConfig.java` file adding these lines:
 ```java
-[...]
 public final class BuildConfig {
-[...]
-  public static final String property01 = "prop01";
-  public static final String property03 = "prop03";
+  //[...]
+  public static final String PROPERTY_01 = "prop01";
+  public static final String PROPERTY_03 = "prop03";
+  //[...]
 }
 ``` 
+Please note the properties (key without any token) will be renamed to accommodate the BuildConfig.java naming convention.
+This can be avoided using the `dontRenameProperty = true` setting.
 
-2  **Shared resources**: make available these shared resources
+`BuildConfig.java` file can usually be found at the following location - although depending on the setup this might be different.
 ```
-<string name="property02" translatable="false">"prop02"</string>
-<string name="property03" translatable="false">"prop03"</string>
-``` 
+<root project folder>/<android app module>/build/generated/source/buildConfig/<variant>/<build type>/<package folders>/BuildConfig.java
+```
 
-Additionally, any of the above properties can be easily overridden by defining two types of environment variables:
+Also, the plugin makes available these resource strings:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- [...] -->
+    <string name="property_02" translatable="false">"prop02"</string>
+    <string name="property_03" translatable="false">"prop03"</string>
+    <!-- [...] -->
+</resources>
+``` 
+Please note the properties (key without any token) will be renamed to accommodate XML resources naming convention.
+This can be avoided using the `dontRenameProperty = true` setting.
+
+`gradleResValues.xml` file can usually be found at the following location - although depending on the setup this might be different.
+```
+<root project folder>/<android app module>/build/generated/res/resValues/<variant>/<build type>/values/gradleResValues.xml
+```
+
+
+Additionally, any of the above property values can be easily overridden by defining two types of environment variables:
 *  (propertyName)=(new value) -  this can simply be defined on any machine 
 *  (prefix_propertyName)=(new value) - same as above, the prefix is a general parameter, this is typically used on CI integration
 
-Setting up appropriately `prefix`, the property can be overridden on local machines or CI.
+Setting up appropriately `prefix`, the property can be overridden on a local machines or in a CI context - or both - in a flexible way.
 
 Please note: the prefixed variable always has a higher priority.
 
-# Usage
+So if we define a variable:
+```
+$ export property03=newvalue
+```
+the `newvalue` value will replace `prop03` in both BuildConfig.java and XML resources.
+
+If we define:
+```
+$ export property03=newvalue
+$ export prefix_property03=latestvalue
+```
+Then `latestvalue` will be the value used instead.
+
+Please note the env var prefix needs to be set using the option `ciEnvironmentPrefix=prefix_`
 
 ## Setup
 Add the plugin to your root project using the new plugin DSL:
@@ -52,7 +87,7 @@ plugins {
   id "com.guidovezzoni.smartproperties" version "<latest version>"
 }
 ```
-or the leagacy plugin application:
+or the legacy plugin application:
 ```groovy
 buildscript {
   repositories {
@@ -70,7 +105,7 @@ Load the plugin in your `app` subproject and configure it
 apply plugin: 'com.guidovezzoni.smartproperties'
 ```
 
-**PLEASE NOTE**: This plugin is meant to be used in a gradle Android sub-project, it hasn't been tested on the root project.
+**PLEASE NOTE**: This plugin is meant to be used in a gradle Android sub-project, it hasn't been tested in a different configuration.
 
 ## Configuration
 
@@ -81,6 +116,7 @@ smartPropertiesPlugin {
     defaultConfig {
         sourceFile = file("$rootDir/smart.properties")
         ciEnvironmentPrefix = "build_"
+        dontRenameProperty = true
     }
 
     productFlavors {
@@ -97,8 +133,16 @@ smartPropertiesPlugin {
 }
 ```
 
+Available settings:
+
+| Name | Description | Default Value | Notes |
+|:-----|:------------|:--------------|:------|
+| sourceFile     | java file pointing at the location of the `*.properties` file       | `file("$rootDir/smart.properties")` | |
+| ciEnvironmentPrefix | prefix used to check env variable values | `""` (empty string) | |
+| dontRenameProperty | if `true` prevent the property name to be adapted to the host file naming convention. | false | This can be helpful in case of issues or conflicts with resources naming | 
+
 ## Known Issues
-1.  generated resValue resources do not seem to be identified correctly by AndroidStudio IDE, however they are built correctly by both gradle and AndroidStudio
+1.  Generated resValue resources do not seem to be identified correctly by AndroidStudio IDE, however they are built correctly by both gradle and AndroidStudio
 
 # Enhancement List
 
@@ -111,7 +155,7 @@ smartPropertiesPlugin {
 ## Minor features/tech improvements
 *  ~~logger~~
 *  ~~unit test https://guides.gradle.org/testing-gradle-plugins/~~
-*   uppercase/underscores for buildconfig
+*  ~~uppercase/underscores for buildconfig~~
 
 # Version History
 

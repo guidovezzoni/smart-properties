@@ -6,6 +6,9 @@ const val RESOURCES_TOKEN = ".Resources"
 const val DOUBLE_QUOTE = "\""
 const val DOT = "."
 const val REPLACEMENT_PATTERN = "$1_$2"
+const val REGEX_PATTERN_LOWERCASE_TO_UPPERCASE = "([a-z])([A-Z])"
+const val REGEX_PATTERN_LETTER_TO_NUMBER = "([A-Za-z])([0-9])"
+const val REGEX_PATTERN_NUMBER_TO_LETTER = "([0-9])([A-Za-z])"
 
 fun String.isBuildConfigProperty(): Boolean {
     return contains(BUILDCONFIG_TOKEN)
@@ -32,10 +35,26 @@ fun String.cleanUpTokens(): String {
         .replace(RESOURCES_TOKEN, "")
 }
 
-fun String.toConstantSyntax(): String {
+/**
+ * Introduces an underscore when:
+ * * a lowercase letter is followed by a uppercase letter
+ * * a letter is followed by a number
+ * * a number is followed by a letter
+ */
+fun String.addUnderscoreBetweenWords(): String {
     return this
-        .replace("([a-z])([A-Z])".toRegex(), REPLACEMENT_PATTERN)
-        .replace("([A-Za-z])([0-9])".toRegex(), REPLACEMENT_PATTERN)
-        .replace("([0-9])([A-Za-z])".toRegex(), REPLACEMENT_PATTERN)
+        .replace(REGEX_PATTERN_LOWERCASE_TO_UPPERCASE.toRegex(), REPLACEMENT_PATTERN)
+        .replace(REGEX_PATTERN_LETTER_TO_NUMBER.toRegex(), REPLACEMENT_PATTERN)
+        .replace(REGEX_PATTERN_NUMBER_TO_LETTER.toRegex(), REPLACEMENT_PATTERN)
+}
+
+fun String.toXmlNamingConvention(): String {
+    return this.addUnderscoreBetweenWords()
+        .toLowerCase()
+}
+
+fun String.toConstantNamingConvention(): String {
+    return this
+        .addUnderscoreBetweenWords()
         .toUpperCase()
 }
