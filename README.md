@@ -1,11 +1,11 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/2e39b28f9cea49c28bdd3cfd8318b5c2)](https://www.codacy.com/manual/guidovezzoni/smart-properties?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=guidovezzoni/smart-properties&amp;utm_campaign=Badge_Grade)
 
 # SmartPropertiesPlugin
-SmartPropertiesPlugin allow handling build parameters in a simpler way, removing the need for boiler plate code in gradle files.
+SmartPropertiesPlugin allow handling build parameters in a simpler way, removing some boiler plate code in gradle files.
 It allows the project to:
-* add an entry in BuildConfig.java
-* add an entry as a resource string
-* override those values with an environment variables
+* add a string entry in `BuildConfig.java`
+* add a resource string to `gradleResValues.xml`
+* override these values with an environment variables
 * have variant specific set of values
    
 # Usage Example
@@ -15,9 +15,9 @@ property01.BuildConfig=prop01
 property02.Resources=prop02
 property03.Resources.BuildConfig=prop03
 ```
-The `smart.property` file has the sam structure as any `*.property` file: 
-typically it's composed by the usual pair `key=value` or a `#commented out line` or an empty line.
-Keys have the usual *camelCase* syntax followed by some extra tokens:
+The `smart.property` file has the same structure as any `*.property` file: 
+typically it's composed by pair `key=value` or a `#commented out line` or an empty line.
+Keys have the usual *camelCase* naming convention followed by some extra tokens:
 * the `.BuildConfig` token will generate a BuildConfig entry
 * the `.Resources` token will generate a string resource entry
 
@@ -30,7 +30,7 @@ public final class BuildConfig {
   //[...]
 }
 ``` 
-Please note the properties have been renamed to accommodate the BuildConfig.java syntax.
+Please note the properties (key without any token) will be renamed to accommodate the BuildConfig.java naming convention.
 This can be avoided using the `keepPropertySyntax = true` setting.
 
 `BuildConfig.java` file can usually be found at the following location - although depending on the setup this might be different.
@@ -48,7 +48,7 @@ Also, the plugin makes available these resource strings:
     <!-- [...] -->
 </resources>
 ``` 
-Please note the property has been renamed to accommodate XML resources syntax.
+Please note the properties (key without any token) will be renamed to accommodate XML resources naming convention.
 This can be avoided using the `keepPropertySyntax = true` setting.
 
 `gradleResValues.xml` file can usually be found at the following location - although depending on the setup this might be different.
@@ -139,7 +139,7 @@ Available settings:
 |:-----|:------------|:--------------|:------|
 | sourceFile     | java file pointing at the location of the `*.properties` file       | `file("$rootDir/smart.properties")` | |
 | ciEnvironmentPrefix | prefix used to check env variable values | `""` (empty string) | |
-| keepPropertySyntax | if `true` prevent the property name to be adapted to the host file syntax. | false | This can be helpful in case of issues or conflicts with resources naming | 
+| keepPropertySyntax | if `true` prevent the property name to be adapted to the host file naming convention. | false | This can be helpful in case of issues or conflicts with resources naming | 
 
 ## Known Issues
 1.  Generated resValue resources do not seem to be identified correctly by AndroidStudio IDE, however they are built correctly by both gradle and AndroidStudio
