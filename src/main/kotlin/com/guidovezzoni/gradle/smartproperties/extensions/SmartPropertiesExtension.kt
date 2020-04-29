@@ -7,13 +7,13 @@ import java.io.File
 
 const val DEFAULT_FILENAME = "smart.properties"
 const val DEFAULT_CI_ENV_PREFIX = ""
-const val DEFAULT_KEEP_PROPERTY_SYNTAX = false
+const val DEFAULT_DONT_RENAME_PROPERTY = false
 
 fun ConfigScriptExtension.getConfigurationForVariant(androidVariant: ApplicationVariant): VariantInfo {
     var flavorName: String? = null
     var sourceFile: File? = null
     var ciEnvironmentPrefix: String? = null
-    var keepPropertySyntax: Boolean? = null
+    var dontRenameProperty: Boolean? = null
 
     productFlavors?.forEach { productFlavor ->
         if (productFlavor.name.equals(androidVariant.flavorName)) {
@@ -21,7 +21,7 @@ fun ConfigScriptExtension.getConfigurationForVariant(androidVariant: Application
             flavorName = productFlavor.name
             sourceFile = productFlavor.sourceFile
             ciEnvironmentPrefix = productFlavor.ciEnvironmentPrefix
-            keepPropertySyntax = productFlavor.keepPropertySyntax
+            dontRenameProperty = productFlavor.dontRenameProperty
         }
     }
 
@@ -30,6 +30,6 @@ fun ConfigScriptExtension.getConfigurationForVariant(androidVariant: Application
         flavorName ?: "",
         sourceFile ?: defaultConfig?.sourceFile ?: File(DEFAULT_FILENAME),
         ciEnvironmentPrefix ?: defaultConfig?.ciEnvironmentPrefix ?: DEFAULT_CI_ENV_PREFIX,
-        keepPropertySyntax ?: defaultConfig?.keepPropertySyntax ?: DEFAULT_KEEP_PROPERTY_SYNTAX
+        dontRenameProperty ?: defaultConfig?.dontRenameProperty ?: DEFAULT_DONT_RENAME_PROPERTY
     )
 }

@@ -140,13 +140,13 @@ class StringsKtTest {
     }
 
     @Test
-    fun `toXmlSyntax returns underscores and lowercase`() {
-        assertEquals("test_property_01_prop", "testProperty01prop".toXmlSyntax())
+    fun `toXmlNamingConvention returns underscores and lowercase`() {
+        assertEquals("test_property_01_prop", "testProperty01prop".toXmlNamingConvention())
     }
 
     @Test
-    fun `toConstantSyntax returns underscores and uppercase`() {
-        assertEquals("TEST_PROPERTY_01_PROP", "testProperty01prop".toConstantSyntax())
+    fun `toConstantNamingConvention returns underscores and uppercase`() {
+        assertEquals("TEST_PROPERTY_01_PROP", "testProperty01prop".toConstantNamingConvention())
     }
 
     companion object {

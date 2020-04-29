@@ -17,5 +17,5 @@ open class ConfigScriptBlock {
     var name: String? = null
     var sourceFile: File? = null
     var ciEnvironmentPrefix: String? = null
-    var keepPropertySyntax: Boolean? = null
+    var dontRenameProperty: Boolean? = null
 }

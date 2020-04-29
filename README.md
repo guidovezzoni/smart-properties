@@ -31,7 +31,7 @@ public final class BuildConfig {
 }
 ``` 
 Please note the properties (key without any token) will be renamed to accommodate the BuildConfig.java naming convention.
-This can be avoided using the `keepPropertySyntax = true` setting.
+This can be avoided using the `dontRenameProperty = true` setting.
 
 `BuildConfig.java` file can usually be found at the following location - although depending on the setup this might be different.
 ```
@@ -49,7 +49,7 @@ Also, the plugin makes available these resource strings:
 </resources>
 ``` 
 Please note the properties (key without any token) will be renamed to accommodate XML resources naming convention.
-This can be avoided using the `keepPropertySyntax = true` setting.
+This can be avoided using the `dontRenameProperty = true` setting.
 
 `gradleResValues.xml` file can usually be found at the following location - although depending on the setup this might be different.
 ```
@@ -116,7 +116,7 @@ smartPropertiesPlugin {
     defaultConfig {
         sourceFile = file("$rootDir/smart.properties")
         ciEnvironmentPrefix = "build_"
-        keepPropertySyntax = true
+        dontRenameProperty = true
     }
 
     productFlavors {
@@ -139,7 +139,7 @@ Available settings:
 |:-----|:------------|:--------------|:------|
 | sourceFile     | java file pointing at the location of the `*.properties` file       | `file("$rootDir/smart.properties")` | |
 | ciEnvironmentPrefix | prefix used to check env variable values | `""` (empty string) | |
-| keepPropertySyntax | if `true` prevent the property name to be adapted to the host file naming convention. | false | This can be helpful in case of issues or conflicts with resources naming | 
+| dontRenameProperty | if `true` prevent the property name to be adapted to the host file naming convention. | false | This can be helpful in case of issues or conflicts with resources naming | 
 
 ## Known Issues
 1.  Generated resValue resources do not seem to be identified correctly by AndroidStudio IDE, however they are built correctly by both gradle and AndroidStudio

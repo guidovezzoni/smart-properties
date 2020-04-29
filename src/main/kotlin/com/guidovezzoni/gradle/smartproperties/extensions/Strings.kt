@@ -48,12 +48,12 @@ fun String.addUnderscoreBetweenWords(): String {
         .replace(REGEX_PATTERN_NUMBER_TO_LETTER.toRegex(), REPLACEMENT_PATTERN)
 }
 
-fun String.toXmlSyntax(): String {
+fun String.toXmlNamingConvention(): String {
     return this.addUnderscoreBetweenWords()
         .toLowerCase()
 }
 
-fun String.toConstantSyntax(): String {
+fun String.toConstantNamingConvention(): String {
     return this
         .addUnderscoreBetweenWords()
         .toUpperCase()
