@@ -31,12 +31,12 @@ internal class SmartPropertiesExtensionKtTest : ConfigScriptExtensionTest() {
         var aFlavor = flavors.create("alpha")
         aFlavor.sourceFile = File("alpha.properties")
         aFlavor.ciEnvironmentPrefix = "pref-alpha-"
-        aFlavor.dontRenameProperty = true
+        aFlavor.dontRenameProperties = true
 
         aFlavor = flavors.create("beta")
         aFlavor.sourceFile = File("beta.properties")
         aFlavor.ciEnvironmentPrefix = "pref-beta-"
-        aFlavor.dontRenameProperty = true
+        aFlavor.dontRenameProperties = true
     }
 
     @Test
@@ -47,7 +47,7 @@ internal class SmartPropertiesExtensionKtTest : ConfigScriptExtensionTest() {
         assertEquals("", variantInfo.productFlavorName)
         assertEquals(DEFAULT_FILENAME, variantInfo.sourceFile.name)
         assertEquals(DEFAULT_CI_ENV_PREFIX, variantInfo.ciEnvironmentPrefix)
-        assertEquals(DEFAULT_DONT_RENAME_PROPERTY, variantInfo.dontRenameProperty)
+        assertEquals(DEFAULT_DONT_RENAME_PROPERTIES, variantInfo.dontRenameProperties)
     }
 
     @Test
@@ -60,7 +60,7 @@ internal class SmartPropertiesExtensionKtTest : ConfigScriptExtensionTest() {
         assertEquals("", variantInfo.productFlavorName)
         assertEquals(DEFAULT_CONFIG_FILE, variantInfo.sourceFile.name)
         assertEquals(DEFAULT_CONFIG_PREFIX, variantInfo.ciEnvironmentPrefix)
-        assertEquals(DEFAULT_CONFIG_DONT_RENAME_PROPERTY, variantInfo.dontRenameProperty)
+        assertEquals(DEFAULT_CONFIG_DONT_RENAME_PROPERTIES, variantInfo.dontRenameProperties)
     }
 
     @Test
@@ -70,7 +70,7 @@ internal class SmartPropertiesExtensionKtTest : ConfigScriptExtensionTest() {
         val aFlavor = flavors.create(DEV_CONFIG_NAME)
         aFlavor.sourceFile = File(DEV_CONFIG_FILE)
         aFlavor.ciEnvironmentPrefix = DEV_CONFIG_PREFIX
-        aFlavor.dontRenameProperty = DEV_CONFIG_DONT_RENAME_PROPERTY
+        aFlavor.dontRenameProperties = DEV_CONFIG_DONT_RENAME_PROPERTIES
         sut.productFlavors = flavors
 
         val variantInfo = sut.getConfigurationForVariant(androidVariant)
@@ -79,7 +79,7 @@ internal class SmartPropertiesExtensionKtTest : ConfigScriptExtensionTest() {
         assertEquals(DEV_CONFIG_NAME, variantInfo.productFlavorName)
         assertEquals(DEV_CONFIG_FILE, variantInfo.sourceFile.name)
         assertEquals(DEV_CONFIG_PREFIX, variantInfo.ciEnvironmentPrefix)
-        assertEquals(DEV_CONFIG_DONT_RENAME_PROPERTY, variantInfo.dontRenameProperty)
+        assertEquals(DEV_CONFIG_DONT_RENAME_PROPERTIES, variantInfo.dontRenameProperties)
     }
 
     @Test
@@ -95,7 +95,7 @@ internal class SmartPropertiesExtensionKtTest : ConfigScriptExtensionTest() {
         assertEquals(DEV_CONFIG_NAME, variantInfo.productFlavorName)
         assertEquals(DEFAULT_CONFIG_FILE, variantInfo.sourceFile.name)
         assertEquals(DEFAULT_CONFIG_PREFIX, variantInfo.ciEnvironmentPrefix)
-        assertEquals(DEFAULT_CONFIG_DONT_RENAME_PROPERTY, variantInfo.dontRenameProperty)
+        assertEquals(DEFAULT_CONFIG_DONT_RENAME_PROPERTIES, variantInfo.dontRenameProperties)
     }
 
     companion object {
@@ -105,10 +105,10 @@ internal class SmartPropertiesExtensionKtTest : ConfigScriptExtensionTest() {
         const val DEV_CONFIG_NAME = "dev"
         const val DEV_CONFIG_FILE = "dev.properties"
         const val DEV_CONFIG_PREFIX = "pref-dev-"
-        const val DEV_CONFIG_DONT_RENAME_PROPERTY = true
+        const val DEV_CONFIG_DONT_RENAME_PROPERTIES = true
 
         const val DEFAULT_FILENAME = "smart.properties"
         const val DEFAULT_CI_ENV_PREFIX = ""
-        const val DEFAULT_DONT_RENAME_PROPERTY = false
+        const val DEFAULT_DONT_RENAME_PROPERTIES = false
     }
 }

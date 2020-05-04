@@ -15,7 +15,7 @@ open class GenerateBuildConfigSmartPropertiesTask : SmartPropertiesBaseTask() {
         types: Set<Type>
     ) {
         if (types.contains(Type.BUIILDCONFIG)) {
-            productFlavor.buildConfigFieldString(key, doubleQuotedValue, variantInfo.dontRenameProperty)
+            productFlavor.buildConfigFieldString(key, doubleQuotedValue, variantInfo.dontRenameProperties)
             logger.debug("BUILDCONFIG entry added $key")
         }
     }
