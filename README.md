@@ -31,7 +31,7 @@ public final class BuildConfig {
 }
 ``` 
 Please note the properties (key without any token) will be renamed to accommodate the BuildConfig.java naming convention.
-This can be avoided using the `dontRenameProperty = true` setting.
+This can be avoided using the `dontRenameProperties = true` setting.
 
 `BuildConfig.java` file can usually be found at the following location - although depending on the setup this might be different.
 ```
@@ -49,7 +49,7 @@ Also, the plugin makes available these resource strings:
 </resources>
 ``` 
 Please note the properties (key without any token) will be renamed to accommodate XML resources naming convention.
-This can be avoided using the `dontRenameProperty = true` setting.
+This can be avoided using the `dontRenameProperties = true` setting.
 
 `gradleResValues.xml` file can usually be found at the following location - although depending on the setup this might be different.
 ```
@@ -116,7 +116,7 @@ smartPropertiesPlugin {
     defaultConfig {
         sourceFile = file("$rootDir/smart.properties")
         ciEnvironmentPrefix = "build_"
-        dontRenameProperty = true
+        dontRenameProperties = true
     }
 
     productFlavors {
@@ -139,7 +139,7 @@ Available settings:
 |:-----|:------------|:--------------|:------|
 | sourceFile     | java file pointing at the location of the `*.properties` file       | `file("$rootDir/smart.properties")` | |
 | ciEnvironmentPrefix | prefix used to check env variable values | `""` (empty string) | |
-| dontRenameProperty | if `true` prevent the property name to be adapted to the host file naming convention. | false | This can be helpful in case of issues or conflicts with resources naming | 
+| dontRenameProperties | if `true` prevent the property name to be adapted to the host file naming convention. | false | This can be helpful in case of issues or conflicts with resources naming | 
 
 ## Known Issues
 1.  Generated resValue resources do not seem to be identified correctly by AndroidStudio IDE, however they are built correctly by both gradle and AndroidStudio
@@ -163,7 +163,8 @@ Latest version: 0.5.0-beta
 
 | Version     | Date       | Issues        | Notes                                      |
 |:------------|:-----------|:--------------|:-------------------------------------------|
-| 0.5.0-beta  | 29/04/2020 | 003 (additional unit tests), 004 (keep property syntax) | |
+| 0.5.1-beta  | 04/05/2020 | 004 (updated dontRenameProperties) | |
+| 0.5.0-beta  | 29/04/2020 | 003 (additional unit tests), 004 (dontRenameProperty) | |
 | 0.4.0_beta  | 16/04/2020 | flavors support, logger, unit test | |
 | 0.3.0_beta  | 28/03/2020 |  env var support, Project renamed | |
 | 0.2.0_beta  | 15/03/2020 | | First beta release |

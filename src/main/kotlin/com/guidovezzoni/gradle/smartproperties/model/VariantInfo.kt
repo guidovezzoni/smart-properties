@@ -10,5 +10,5 @@ data class VariantInfo(
     val productFlavorName: String,
     val sourceFile: File,
     val ciEnvironmentPrefix: String,
-    val dontRenameProperty: Boolean
+    val dontRenameProperties: Boolean
 )

@@ -32,28 +32,28 @@ internal class BaseFlavorKtTest {
     }
 
     @Test
-    fun `when buildConfigFieldString with dontRenameProperty is called buildConfigField is called`() {
+    fun `when buildConfigFieldString with dontRenameProperties is called buildConfigField is called`() {
         baseFlavourSpy.buildConfigFieldString(KEY, VALUE, true)
 
         verify { baseFlavourSpy.buildConfigField("String", KEY, VALUE) }
     }
 
     @Test
-    fun `when buildConfigFieldString without dontRenameProperty is called buildConfigField is called`() {
+    fun `when buildConfigFieldString without dontRenameProperties is called buildConfigField is called`() {
         baseFlavourSpy.buildConfigFieldString(KEY, VALUE, false)
 
         verify { baseFlavourSpy.buildConfigField("String", "KEY_TEST", VALUE) }
     }
 
     @Test
-    fun `when resValueString with dontRenameProperty is called resValue is called`() {
+    fun `when resValueString with dontRenameProperties is called resValue is called`() {
         baseFlavourSpy.resValueString(KEY, VALUE,true)
 
         verify { baseFlavourSpy.resValue("string", KEY, VALUE) }
     }
 
     @Test
-    fun `when resValueString without dontRenameProperty is called resValue is called`() {
+    fun `when resValueString without dontRenameProperties is called resValue is called`() {
         baseFlavourSpy.resValueString(KEY, VALUE,false)
 
         verify { baseFlavourSpy.resValue("string", "key_test", VALUE) }

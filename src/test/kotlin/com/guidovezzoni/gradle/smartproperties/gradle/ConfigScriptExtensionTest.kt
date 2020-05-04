@@ -25,7 +25,7 @@ internal open class ConfigScriptExtensionTest {
         every { defaultConfig.name } returns null
         every { defaultConfig.sourceFile } returns File(DEFAULT_CONFIG_FILE)
         every { defaultConfig.ciEnvironmentPrefix } returns DEFAULT_CONFIG_PREFIX
-        every { defaultConfig.dontRenameProperty } returns DEFAULT_CONFIG_DONT_RENAME_PROPERTY
+        every { defaultConfig.dontRenameProperties } returns DEFAULT_CONFIG_DONT_RENAME_PROPERTIES
     }
 
     @Test
@@ -48,6 +48,6 @@ internal open class ConfigScriptExtensionTest {
     companion object {
         const val DEFAULT_CONFIG_FILE = "default-config"
         const val DEFAULT_CONFIG_PREFIX = "default_config_prefix"
-        const val DEFAULT_CONFIG_DONT_RENAME_PROPERTY = false
+        const val DEFAULT_CONFIG_DONT_RENAME_PROPERTIES = false
     }
 }
