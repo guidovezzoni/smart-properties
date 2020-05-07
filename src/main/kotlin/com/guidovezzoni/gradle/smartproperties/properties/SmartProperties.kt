@@ -20,14 +20,15 @@ class SmartProperties(private val ciPrefix: String) : HashMap<String, Pair<Strin
         properties.load(file.reader())
 
         properties.forEach { propKey, propValue ->
-            addSmartProperty(
-                propKey.toString(),
-                propValue.toString()
-            )
+            val keyString = propKey.toString()
+            val valueString = propValue.toString()
+
+            checkTokens(keyString)
+            addSmartProperty(keyString, valueString)
         }
     }
 
-    private fun addSmartProperty(keyString: String, valueString: String) {
+    private fun checkTokens(keyString: String) {
         if (!keyString.hasKnownTokens()) {
             throw IllegalArgumentException("Key $keyString doesn't have any token")
         }
@@ -35,19 +36,21 @@ class SmartProperties(private val ciPrefix: String) : HashMap<String, Pair<Strin
         if (keyString.hasUnknownTokens()) {
             throw IllegalArgumentException("Key $keyString has unknown tokens")
         }
+    }
 
-        val finalValue = getEnvVar(keyString.cleanUpTokens(), ciPrefix) ?: valueString
+    private fun addSmartProperty(key: String, value: String) {
+        val finalValue = getEnvVar(key.cleanUpTokens(), ciPrefix) ?: value
 
         val type: MutableSet<Type> = mutableSetOf()
-        if (keyString.isBuildConfigProperty()) {
+        if (key.isBuildConfigProperty()) {
             type.add(Type.BUIILDCONFIG)
         }
-        if (keyString.isResourcesProperty()) {
+        if (key.isResourcesProperty()) {
             type.add(Type.RESOURCES)
         }
 
         put(
-            keyString.cleanUpTokens(),
+            key.cleanUpTokens(),
             Pair(finalValue.doubleQuoted(), type)
         )
     }
