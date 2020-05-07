@@ -30,9 +30,7 @@ abstract class SmartPropertiesBaseTask : DefaultTask() {
     abstract fun performFlavorOperation(
         productFlavor: ProductFlavor,
         variantInfo: VariantInfo,
-        key: String,
-        doubleQuotedValue: String,
-        types: Set<Type>
+        entry: Map.Entry<String, Pair<String, Set<Type>>>
     )
 
     @TaskAction
@@ -45,7 +43,7 @@ abstract class SmartPropertiesBaseTask : DefaultTask() {
 
         entries.forEach { entry ->
             productFlavor?.let { flavor ->
-                performFlavorOperation(flavor, variantInfo, entry.key, entry.value.first, entry.value.second)
+                performFlavorOperation(flavor, variantInfo, entry)
             }
         }
     }

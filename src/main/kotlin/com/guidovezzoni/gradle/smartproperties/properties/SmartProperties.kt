@@ -20,32 +20,36 @@ class SmartProperties(private val ciPrefix: String) : HashMap<String, Pair<Strin
         properties.load(file.reader())
 
         properties.forEach { propKey, propValue ->
-            val keyString = propKey.toString()
-            val valueString = propValue.toString()
-
-            if (!keyString.hasKnownTokens()) {
-                throw IllegalArgumentException("Key $keyString doesn't have any token")
-            }
-
-            if (keyString.hasUnknownTokens()) {
-                throw IllegalArgumentException("Key $keyString has unknown tokens")
-            }
-
-            val finalValue = getEnvVar(keyString.cleanUpTokens(), ciPrefix) ?: valueString
-
-            val type: MutableSet<Type> = mutableSetOf()
-            if (keyString.isBuildConfigProperty()) {
-                type.add(Type.BUIILDCONFIG)
-            }
-            if (keyString.isResourcesProperty()) {
-                type.add(Type.RESOURCES)
-            }
-
-            put(
-                keyString.cleanUpTokens(),
-                Pair(finalValue.doubleQuoted(), type)
+            addSmartProperty(
+                propKey.toString(),
+                propValue.toString()
             )
         }
+    }
+
+    private fun addSmartProperty(keyString: String, valueString: String) {
+        if (!keyString.hasKnownTokens()) {
+            throw IllegalArgumentException("Key $keyString doesn't have any token")
+        }
+
+        if (keyString.hasUnknownTokens()) {
+            throw IllegalArgumentException("Key $keyString has unknown tokens")
+        }
+
+        val finalValue = getEnvVar(keyString.cleanUpTokens(), ciPrefix) ?: valueString
+
+        val type: MutableSet<Type> = mutableSetOf()
+        if (keyString.isBuildConfigProperty()) {
+            type.add(Type.BUIILDCONFIG)
+        }
+        if (keyString.isResourcesProperty()) {
+            type.add(Type.RESOURCES)
+        }
+
+        put(
+            keyString.cleanUpTokens(),
+            Pair(finalValue.doubleQuoted(), type)
+        )
     }
 
     private fun getEnvVar(propName: String, ciPrefix: String): String? {
