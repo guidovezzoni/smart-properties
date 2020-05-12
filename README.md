@@ -1,4 +1,11 @@
+[![Kotlin](https://img.shields.io/badge/Kotlin-1.3.72-blue?style=flat&logo=kotlin)](https://kotlinlang.org)
+[![IDEA](https://img.shields.io/badge/IntelliJIDEA-2020.1.1-blue?style=flat&logo=intellij-idea)](https://www.jetbrains.com/idea/)
+[![Gradle](https://img.shields.io/badge/Gradle-5.2.1-blue?style=flat&logo=gradle)](https://gradle.org)
+
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/2e39b28f9cea49c28bdd3cfd8318b5c2)](https://www.codacy.com/manual/guidovezzoni/smart-properties?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=guidovezzoni/smart-properties&amp;utm_campaign=Badge_Grade)
+[![codebeat badge](https://codebeat.co/badges/939b34f9-78b2-43c3-879d-e104457754e8)](https://codebeat.co/projects/github-com-guidovezzoni-smart-properties-master)
+
+![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/guidovezzoni/smart-properties?include_prereleases&sort=semver)
 
 # SmartPropertiesPlugin
 SmartPropertiesPlugin allow handling build parameters in a simpler way, removing some boiler plate code in gradle files.

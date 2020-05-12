@@ -10,10 +10,12 @@ open class GenerateResourcesSmartPropertiesTask : SmartPropertiesBaseTask() {
     override fun performFlavorOperation(
         productFlavor: ProductFlavor,
         variantInfo: VariantInfo,
-        key: String,
-        doubleQuotedValue: String,
-        types: Set<Type>
+        entry: Map.Entry<String, Pair<String, Set<Type>>>
     ) {
+        val key = entry.key
+        val doubleQuotedValue = entry.value.first
+        val types = entry.value.second
+
         if (types.contains(Type.RESOURCES)) {
             productFlavor.resValueString(key, doubleQuotedValue, variantInfo.dontRenameProperties)
             logger.debug("RESVALUE String added $key")
