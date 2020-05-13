@@ -6,7 +6,7 @@ repositories {
 }
 
 plugins {
-    kotlin("jvm") version "1.3.70"
+    kotlin("jvm") version "1.3.72"
     id("java-gradle-plugin")
     id("com.gradle.plugin-publish") version "0.11.0"
     `maven-publish`
@@ -33,12 +33,14 @@ configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
 }
 
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> { kotlinOptions.jvmTarget = "1.8" }
+
 gradlePlugin {
     plugins {
         create("smartPropertiesPlugin") {
             id = "com.guidovezzoni.smartproperties"
             group = "com.guidovezzoni.smartproperties"
-            version = "0.4.1-local"
+            version = "0.5.1-beta"
             @Suppress("UnstableApiUsage")
             displayName = "Smart Properties Plugin"
             @Suppress("UnstableApiUsage")

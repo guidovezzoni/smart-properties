@@ -1,12 +1,10 @@
 package com.guidovezzoni.gradle.smartproperties.gradle
 
-import com.guidovezzoni.gradle.smartproperties.exceptions.InvalidConfigurationException
 import com.guidovezzoni.gradle.smartproperties.logger.CustomLogging
 import groovy.lang.Closure
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
-import java.io.File
 
 /**
  * Extension class for plugin configuration
@@ -20,7 +18,7 @@ open class ConfigScriptExtension(private val project: Project) {
     @Suppress("unused")
     fun defaultConfig(defaultDef: Closure<*>): ConfigScriptBlock? {
         if (defaultConfig != null) {
-            throw InvalidConfigurationException("Only one defaultConfig closure allowed")
+            throw IllegalArgumentException("Only one defaultConfig closure allowed")
         }
         defaultConfig = ConfigScriptBlock()
 
@@ -35,17 +33,7 @@ open class ConfigScriptExtension(private val project: Project) {
         action.execute(productFlavors)
     }
 
-    fun getDefaultConfigSourceFile(): File {
-        return defaultConfig?.sourceFile ?: File(DEFAULT_FILENAME)
-    }
-
-    fun getDefaultConfigCiEnvironmentPrefix(): String {
-        return defaultConfig?.ciEnvironmentPrefix ?: DEFAULT_CI_ENV_PREFIX
-    }
-
     companion object {
-        const val DEFAULT_FILENAME = "smart.properties"
-        const val DEFAULT_CI_ENV_PREFIX = ""
         const val EXTENSION_NAME = "smartPropertiesPlugin"
     }
 }

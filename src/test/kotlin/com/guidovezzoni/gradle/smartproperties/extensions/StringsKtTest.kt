@@ -93,6 +93,62 @@ class StringsKtTest {
         assertEquals(PROPERTY_1, actualValue)
     }
 
+    @Test
+    fun `addUnderscoreBetweenWords adds an underscore between a lowercase letter is followed by a uppercase letter`() {
+        assertEquals("test_Property", "testProperty".addUnderscoreBetweenWords())
+        assertEquals("property", "property".addUnderscoreBetweenWords())
+    }
+
+    @Test
+    fun `addUnderscoreBetweenWords adds an underscore between a letter and a number`() {
+        // lowercase
+        assertEquals("test_Property_01", "testProperty01".addUnderscoreBetweenWords())
+        // uppercase
+        assertEquals("test_Propert_Y_01", "testPropertY01".addUnderscoreBetweenWords())
+    }
+
+    @Test
+    fun `addUnderscoreBetweenWords adds an underscore between a number and a letter`() {
+        assertEquals("01_Property", "01Property".addUnderscoreBetweenWords())
+        assertEquals("01_property", "01property".addUnderscoreBetweenWords())
+    }
+
+    @Test
+    fun `addUnderscoreBetweenWords - corner case - existing underscores are left unchanged`() {
+        // corner case - existing underscore
+        assertEquals("test_Property", "test_Property".addUnderscoreBetweenWords())
+        // corner case - existing underscore
+        assertEquals("test_Property_01", "testProperty_01".addUnderscoreBetweenWords())
+        // corner case - existing underscore
+        assertEquals("test_Propert_Y_01", "testPropertY_01".addUnderscoreBetweenWords())
+        // corner case - existing underscore
+        assertEquals("01_Property", "01_Property".addUnderscoreBetweenWords())
+        // corner case - existing underscore
+        assertEquals("01_property", "01_property".addUnderscoreBetweenWords())
+
+    }
+
+    @Test
+    fun `addUnderscoreBetweenWords - corner case - multiple underscores are left unchanged`() {
+        assertEquals("test__Property_2_underscore", "test__Property2underscore".addUnderscoreBetweenWords())
+        assertEquals("test___Property_3_Underscore", "test___Property3Underscore".addUnderscoreBetweenWords())
+    }
+
+    @Test
+    fun `addUnderscoreBetweenWords - corner case - multiple uppercase letters are left unchanged`() {
+        assertEquals("TEST_PROPERTY", "TEST_PROPERTY".addUnderscoreBetweenWords())
+    }
+
+    @Test
+    fun `toXmlNamingConvention returns underscores and lowercase`() {
+        assertEquals("test_property_01_prop", "testProperty01prop".toXmlNamingConvention())
+    }
+
+    @Test
+    fun `toConstantNamingConvention returns underscores and uppercase`() {
+        assertEquals("TEST_PROPERTY_01_PROP", "testProperty01prop".toConstantNamingConvention())
+    }
+
     companion object {
         const val PROPERTY_1 = "Property1"
         const val PROPERTY_2_BUILD_CONFIG = "Property2.BuildConfig"
