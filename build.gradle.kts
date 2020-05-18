@@ -106,3 +106,27 @@ dependencies {
     "functionalTestImplementation"("io.mockk:mockk:1.9")
 }
 */
+
+
+
+// Write the plugin's classpath to a file to share with the tests
+tasks.register("createClasspathManifest") {
+    val outputDir = file("$buildDir/$name")
+
+    inputs.files(sourceSets.main.get().runtimeClasspath)
+        .withPropertyName("runtimeClasspath")
+        .withNormalizer(ClasspathNormalizer::class)
+    outputs.dir(outputDir)
+        .withPropertyName("outputDir")
+
+    doLast {
+        outputDir.mkdirs()
+        file("$outputDir/plugin-classpath.txt").writeText(sourceSets.main.get().runtimeClasspath.joinToString("\n"))
+    }
+}
+
+// Add the classpath file to the test runtime classpath
+dependencies {
+    testRuntimeOnly(files(tasks["createClasspathManifest"]))
+}
+

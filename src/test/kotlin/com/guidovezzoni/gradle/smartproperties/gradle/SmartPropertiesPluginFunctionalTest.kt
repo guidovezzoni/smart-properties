@@ -1,5 +1,7 @@
 package com.guidovezzoni.gradle.smartproperties.gradle
 
+import com.guidovezzoni.gradle.smartproperties.gradle.androidplugintest.AndroidTesterHelper
+import com.guidovezzoni.gradle.smartproperties.gradle.androidplugintest.Type
 import org.gradle.internal.impldep.org.junit.Rule
 import org.gradle.internal.impldep.org.junit.rules.TemporaryFolder
 import org.gradle.testkit.runner.BuildResult
@@ -18,17 +20,23 @@ internal class SmartPropertiesPluginFunctionalTest {
     @JvmField
     val testProjectDir: TemporaryFolder = TemporaryFolder()
 
-    lateinit var buildFile: File
-    lateinit var settingsFile: File
+    lateinit var androidTesterHelper: AndroidTesterHelper
 
+    lateinit var settingsFile: File
+    lateinit var rootGradleFile: File
 
     @BeforeEach
     internal fun setUp() {
-        testProjectDir.create()
-        buildFile = testProjectDir.newFile("build.gradle")
-        settingsFile = testProjectDir.newFile("settings.gradle")
+        val pluginClassPath: MutableList<String> = mutableListOf()
+        File("/Users/guido/dev/guido/hyper-properties/build/createClasspathManifest/plugin-classpath.txt")
+            .forEachLine { pluginClassPath.add(it) }
+
+        val classpathString = pluginClassPath.joinToString(separator = "', '", prefix = "'", postfix = "'")
+
+        androidTesterHelper = AndroidTesterHelper(testProjectDir, classpathString)
     }
 
+    @Disabled
     @Test
     fun `test helloWorld task`() {
         settingsFile.writeText(
@@ -36,7 +44,7 @@ internal class SmartPropertiesPluginFunctionalTest {
             rootProject.name = "hello-world"
         """.trimIndent()
         )
-        buildFile.writeText(
+        rootGradleFile.writeText(
             """
             tasks.register("helloWorld") {
                 doLast {
@@ -57,31 +65,21 @@ internal class SmartPropertiesPluginFunctionalTest {
 
     @Test
     internal fun `functional test`() {
-        settingsFile.writeText("rootProject.name = \"test-project\"\n")
+        androidTesterHelper.writeAndroidProject(Type.GROOVY_CLASSPATH)
 
-//        buildFile.writeText("plugins {\nid(\"com.guidovezzoni.smartproperties\") version \"0.4.1-local\"\n}\n")
-        buildFile.writeText(
-            """
-                buildscript {
-                    dependencies {
-                        classpath("com.android.tools.build:gradle:3.2.1")
-                        classpath(kotlin("gradle-plugin", version = "1.3.72"))
-                    }
-                }
-                
-            plugins{
-                id("com.guidovezzoni.smartproperties") version "0.4.1-local"
-                id("com.android.application")
-                kotlin("android")
-            }
-        """.trimIndent()
-        )
 
+//        val pluginClassPathFiles: MutableList<File> = mutableListOf()
+//        File("/Users/guido/dev/guido/hyper-properties/build/createClasspathManifest/plugin-classpath.txt")
+//            .forEachLine { pluginClassPathFiles.add(File(it)) }
 
         val result = GradleRunner.create()
             .withProjectDir(testProjectDir.root)
-            .withArguments("testProject")
-            .withPluginClasspath()
+//            .withArguments("assemble")  //requires SDK
+            .withArguments("androidDependencies", "--stacktrace", "--scan")
+//            .withPluginClasspath() // auto
+//            .withPluginClasspath(pluginClassPathFiles)
+            .withDebug(true)
+//            .withEnvironment(mapOf("ANDROID_SDK_ROOT" to "/Users/guido/Library/Android/sdk"))
             .build()
 
     }
@@ -91,7 +89,7 @@ internal class SmartPropertiesPluginFunctionalTest {
     internal fun `can successfully configure URL through extension and verify it`() {
         settingsFile.writeText("rootProject.name = 'hello-world'")
 
-        buildFile.writeText("")
+        rootGradleFile.writeText("")
 
         val result: BuildResult = GradleRunner.create()
             .withProjectDir(testProjectDir.root)
