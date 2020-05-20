@@ -1,0 +1,18 @@
+//noinspection GrPackage
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        jcenter()
+        google()
+    }
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id == "com.android.application") {
+                useModule("com.android.tools.build:gradle:3.6.1")
+            }
+        }
+    }
+}
+
+rootProject.name='simplestandroidproject2'
+include ':app'

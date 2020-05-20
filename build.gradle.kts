@@ -110,6 +110,7 @@ dependencies {
 
 
 // Write the plugin's classpath to a file to share with the tests
+// see https://docs.gradle.org/current/userguide/test_kit.html#sec:working_with_gradle_versions_prior_to_28
 tasks.register("createClasspathManifest") {
     val outputDir = file("$buildDir/$name")
 
@@ -121,7 +122,8 @@ tasks.register("createClasspathManifest") {
 
     doLast {
         outputDir.mkdirs()
-        file("$outputDir/plugin-classpath.txt").writeText(sourceSets.main.get().runtimeClasspath.joinToString("\n"))
+        file("$outputDir/plugin-classpath.txt")
+            .writeText(sourceSets.main.get().runtimeClasspath.joinToString("\n"))
     }
 }
 

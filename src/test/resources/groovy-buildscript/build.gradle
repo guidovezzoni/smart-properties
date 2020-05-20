@@ -1,0 +1,36 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+//noinspection GrPackage
+buildscript {
+    repositories {
+        mavenCentral()
+        google()
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.6.3'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:{kotlinVersion}"
+//        classpath "com.guidovezzoni.smartproperties:smart-properties:0.5.1-beta"
+        {classPath}
+        //classpath files($injectedClassPath)
+
+// NOTE: Do not place your application dependencies here; they belong
+// in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
