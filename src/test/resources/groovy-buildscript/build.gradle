@@ -9,10 +9,10 @@ buildscript {
         maven {
             url "https://plugins.gradle.org/m2/"
         }
-
     }
+
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.3'
+        classpath 'com.android.tools.build:gradle:{gradlePluginVersion}'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:{kotlinVersion}"
 //        classpath "com.guidovezzoni.smartproperties:smart-properties:0.5.1-beta"
         {classPath}

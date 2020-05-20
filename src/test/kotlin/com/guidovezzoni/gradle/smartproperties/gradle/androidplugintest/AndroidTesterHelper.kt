@@ -5,7 +5,9 @@ import java.io.File
 
 class AndroidTesterHelper(
     private val temporaryFolder: TemporaryFolder,
-    private val injectedClassPath: String = ""
+    private val injectedClassPath: String = "",
+    private val kotlinVersion: String = "1.3.72",
+    private val gradlePluginVersion: String = "3.6.3"
 ) {
 
     fun writeAndroidProject(type: Type) {
@@ -22,12 +24,8 @@ class AndroidTesterHelper(
         temporaryFolder.writeFromRes(Type.GROOVY_CLASSPATH, "app/src/main/AndroidManifest.xml")
     }
 
-    private val getKotlinVersion: String
-        get() = "1.3.72"
-
     private val getBuildscriptClassPath: String
         get() = if (injectedClassPath.isBlank()) "" else "classpath files($injectedClassPath)"
-
 
     private fun File.writeFromRes(type: Type, name: String) {
         val resPath: String = when (type) {
@@ -41,8 +39,9 @@ class AndroidTesterHelper(
 
         this.writeText(
             resource.readText()
-                .replace("{kotlinVersion}", getKotlinVersion)
+                .replace("{kotlinVersion}", kotlinVersion)
                 .replace("{classPath}", getBuildscriptClassPath)
+                .replace("{gradlePluginVersion}", gradlePluginVersion)
         )
     }
 
