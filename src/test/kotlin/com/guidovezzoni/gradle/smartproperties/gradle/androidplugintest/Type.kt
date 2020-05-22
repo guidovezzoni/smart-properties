@@ -1,6 +1,6 @@
 package com.guidovezzoni.gradle.smartproperties.gradle.androidplugintest
 
 enum class Type {
-    GROOVY_CLASSPATH,
-    GROOVY_PLUGINS
+    GROOVY_BUILDSCRIPT_ANDROID,
+    GROOVY_PLUGINS_ANDROID
 }

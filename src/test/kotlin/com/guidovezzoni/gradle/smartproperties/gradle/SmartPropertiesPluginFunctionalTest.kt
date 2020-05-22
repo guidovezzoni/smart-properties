@@ -28,7 +28,7 @@ internal class SmartPropertiesPluginFunctionalTest {
     @BeforeEach
     internal fun setUp() {
         val pluginClassPath: MutableList<String> = mutableListOf()
-        File("/Users/guido/dev/guido/hyper-properties/build/createClasspathManifest/plugin-classpath.txt")
+        File("build/createClasspathManifest/plugin-classpath.txt")
             .forEachLine { pluginClassPath.add(it) }
 
         val classpathString = pluginClassPath.joinToString(separator = "', '", prefix = "'", postfix = "'")
@@ -65,12 +65,7 @@ internal class SmartPropertiesPluginFunctionalTest {
 
     @Test
     internal fun `functional test`() {
-        androidTesterHelper.writeAndroidProject(Type.GROOVY_CLASSPATH)
-
-
-//        val pluginClassPathFiles: MutableList<File> = mutableListOf()
-//        File("/Users/guido/dev/guido/hyper-properties/build/createClasspathManifest/plugin-classpath.txt")
-//            .forEachLine { pluginClassPathFiles.add(File(it)) }
+        androidTesterHelper.writeAndroidProject(Type.GROOVY_BUILDSCRIPT_ANDROID)
 
         val result = GradleRunner.create()
             .withProjectDir(testProjectDir.root)
@@ -81,6 +76,11 @@ internal class SmartPropertiesPluginFunctionalTest {
             .withDebug(true)
 //            .withEnvironment(mapOf("ANDROID_SDK_ROOT" to "/Users/guido/Library/Android/sdk"))
             .build()
+
+    }
+
+    @Test
+    internal fun `when not an android module then fail`() {
 
     }
 

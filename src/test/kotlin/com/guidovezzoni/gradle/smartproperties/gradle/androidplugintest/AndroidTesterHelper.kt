@@ -21,7 +21,7 @@ class AndroidTesterHelper(
         temporaryFolder.writeFromRes(type, "app/build.gradle")
 
         temporaryFolder.newFolder("app", "src", "main")
-        temporaryFolder.writeFromRes(Type.GROOVY_CLASSPATH, "app/src/main/AndroidManifest.xml")
+        temporaryFolder.writeFromRes(Type.GROOVY_BUILDSCRIPT_ANDROID, "app/src/main/AndroidManifest.xml")
     }
 
     private val getBuildscriptClassPath: String
@@ -29,8 +29,8 @@ class AndroidTesterHelper(
 
     private fun File.writeFromRes(type: Type, name: String) {
         val resPath: String = when (type) {
-            Type.GROOVY_CLASSPATH -> "groovy-buildscript/"
-            Type.GROOVY_PLUGINS -> "groovy-plugins/"
+            Type.GROOVY_BUILDSCRIPT_ANDROID -> "groovy-buildscript/"
+            Type.GROOVY_PLUGINS_ANDROID -> "groovy-plugins/"
         } + name
 
         val resource =
