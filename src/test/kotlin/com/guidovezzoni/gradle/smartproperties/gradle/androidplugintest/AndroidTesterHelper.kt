@@ -6,13 +6,19 @@ import java.io.File
 class AndroidTesterHelper(
     private val temporaryFolder: TemporaryFolder,
     private val injectedClassPath: String = "",
-    private val pluginUnderTest: String = "",  //apply plugin: 'com.guidovezzoni.smartproperties'
+    private val pluginUnderTest: String = "",
+    private var pluginAndroidModuleBuildGradleSection: String = "",
     private val kotlinVersion: String = "1.3.72",
     private val gradlePluginVersion: String = "3.6.3"
 ) {
 
-    fun writeAndroidProject(type: Type) {
+    fun writeAndroidProject(
+        type: Type,
+        customPluginAndroidModuleBuildGradleSection: String = ""
+    ) {
         temporaryFolder.create()
+
+        pluginAndroidModuleBuildGradleSection = customPluginAndroidModuleBuildGradleSection
 
         temporaryFolder.writeFromRes(type, "settings.gradle")
         temporaryFolder.writeFromRes(type, "build.gradle")
@@ -43,7 +49,7 @@ class AndroidTesterHelper(
         val resPath: String = when (type) {
             Type.GROOVY_BUILDSCRIPT_ANDROID -> "groovy-buildscript/"
             Type.GROOVY_PLUGINS_ANDROID -> "groovy-plugins/"
-            Type.GROOVY_SIMPLE ->  "groovy-simple/"
+            Type.GROOVY_SIMPLE -> "groovy-simple/"
         } + name
 
         val resource =
@@ -58,6 +64,7 @@ class AndroidTesterHelper(
                 .replace("{idPluginUnderTest}", getIdPluginUnderTest())
                 .replace("{kotlinVersion}", kotlinVersion)
                 .replace("{gradlePluginVersion}", gradlePluginVersion)
+                .replace("{appBuildGradleSection}", pluginAndroidModuleBuildGradleSection)
         )
     }
 

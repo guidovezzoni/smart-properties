@@ -85,20 +85,18 @@ internal class SmartPropertiesPluginFunctionalTest {
             .buildAndFail()
     }
 
-    @Disabled
     @Test
     fun `when double default config found then fail`() {
-        androidTesterHelper.writeAndroidProject(Type.GROOVY_BUILDSCRIPT_ANDROID)
+        androidTesterHelper.writeAndroidProject(
+            Type.GROOVY_BUILDSCRIPT_ANDROID,
+            DOUBLE_SECTION
+        )
 
         val result = GradleRunner.create()
             .withProjectDir(testProjectDir.root)
-//            .withArguments("assemble")  //requires SDK
-            .withArguments("androidDependencies", "--stacktrace", "--scan")
-//            .withPluginClasspath() // auto
-//            .withPluginClasspath(pluginClassPathFiles)
+            .withArguments("androidDependencies")
             .withDebug(true)
-//            .withEnvironment(mapOf("ANDROID_SDK_ROOT" to "/Users/guido/Library/Android/sdk"))
-            .build()
+            .buildAndFail()
 
     }
 
@@ -127,5 +125,34 @@ internal class SmartPropertiesPluginFunctionalTest {
 
         assertTrue(result.output.contains("Hello world!"))
         assertEquals(TaskOutcome.SUCCESS, result.task(":helloWorld")?.outcome)
+    }
+
+    companion object {
+        val EMPTY_SECTION =
+            """
+smartPropertiesPlugin {
+    defaultConfig {
+    }
+}
+            """.trimIndent()
+
+        val SIMPLE_SECTION =
+            """
+smartPropertiesPlugin {
+    defaultConfig {
+        sourceFile = file("${'$'}rootDir/new-smart.properties")
+    }
+}
+            """.trimIndent()
+
+        val DOUBLE_SECTION =
+            """
+smartPropertiesPlugin {
+    defaultConfig {
+    }
+    defaultConfig {
+    }
+}
+            """.trimIndent()
     }
 }
