@@ -6,6 +6,7 @@ import java.io.File
 class AndroidTesterHelper(
     private val temporaryFolder: TemporaryFolder,
     private val injectedClassPath: String = "",
+    private val pluginUnderTest: String = "",  //apply plugin: 'com.guidovezzoni.smartproperties'
     private val kotlinVersion: String = "1.3.72",
     private val gradlePluginVersion: String = "3.6.3"
 ) {
@@ -27,10 +28,22 @@ class AndroidTesterHelper(
     private val getBuildscriptClassPath: String
         get() = if (injectedClassPath.isBlank()) "" else "classpath files($injectedClassPath)"
 
+    private val getApplyPluginUnderTest: String
+        get() = if (pluginUnderTest.isBlank()) "" else "apply plugin: '$pluginUnderTest'"
+
+    private fun getIdPluginUnderTest(apply: Boolean = true): String {
+        val applyDependencySpec = if (apply) "" else " apply false"
+        return if (pluginUnderTest.isBlank())
+            ""
+        else
+            "id \"$pluginUnderTest\"$applyDependencySpec"
+    }
+
     private fun File.writeFromRes(type: Type, name: String) {
         val resPath: String = when (type) {
             Type.GROOVY_BUILDSCRIPT_ANDROID -> "groovy-buildscript/"
             Type.GROOVY_PLUGINS_ANDROID -> "groovy-plugins/"
+            Type.GROOVY_SIMPLE ->  "groovy-simple/"
         } + name
 
         val resource =
@@ -39,8 +52,11 @@ class AndroidTesterHelper(
 
         this.writeText(
             resource.readText()
-                .replace("{kotlinVersion}", kotlinVersion)
                 .replace("{classPath}", getBuildscriptClassPath)
+                .replace("{applyPluginUnderTest}", getApplyPluginUnderTest)
+                .replace("{idPluginUnderTestApplyFalse}", getIdPluginUnderTest(false))
+                .replace("{idPluginUnderTest}", getIdPluginUnderTest())
+                .replace("{kotlinVersion}", kotlinVersion)
                 .replace("{gradlePluginVersion}", gradlePluginVersion)
         )
     }

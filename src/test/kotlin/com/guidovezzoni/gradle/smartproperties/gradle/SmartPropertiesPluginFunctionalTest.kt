@@ -4,7 +4,6 @@ import com.guidovezzoni.gradle.smartproperties.gradle.androidplugintest.AndroidT
 import com.guidovezzoni.gradle.smartproperties.gradle.androidplugintest.Type
 import org.gradle.internal.impldep.org.junit.Rule
 import org.gradle.internal.impldep.org.junit.rules.TemporaryFolder
-import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -33,7 +32,74 @@ internal class SmartPropertiesPluginFunctionalTest {
 
         val classpathString = pluginClassPath.joinToString(separator = "', '", prefix = "'", postfix = "'")
 
-        androidTesterHelper = AndroidTesterHelper(testProjectDir, classpathString)
+        androidTesterHelper = AndroidTesterHelper(
+            testProjectDir,
+            classpathString,
+            "com.guidovezzoni.smartproperties"
+        )
+    }
+
+    @Test
+    fun `auto-test simple gradle project`() {
+        val autoTestAndroidTesterHelper = AndroidTesterHelper(testProjectDir)
+        autoTestAndroidTesterHelper.writeAndroidProject(Type.GROOVY_SIMPLE)
+
+        val result = GradleRunner.create()
+            .withProjectDir(testProjectDir.root)
+            .withArguments("assemble")
+            .build()
+    }
+
+    @Test
+    fun `auto-test buildscript android project`() {
+        val autoTestAndroidTesterHelper = AndroidTesterHelper(testProjectDir)
+        autoTestAndroidTesterHelper.writeAndroidProject(Type.GROOVY_BUILDSCRIPT_ANDROID)
+
+        val result = GradleRunner.create()
+            .withProjectDir(testProjectDir.root)
+//            .withArguments("assemble")  //requires SDK
+            .withArguments("androidDependencies")
+            .build()
+    }
+
+    @Test
+    fun `auto-test plugins android project`() {
+        val autoTestAndroidTesterHelper = AndroidTesterHelper(testProjectDir)
+        autoTestAndroidTesterHelper.writeAndroidProject(Type.GROOVY_PLUGINS_ANDROID)
+
+        val result = GradleRunner.create()
+            .withProjectDir(testProjectDir.root)
+//            .withArguments("assemble")  //requires SDK
+            .withArguments("androidDependencies")
+            .build()
+    }
+
+    @Test
+    fun `when not an android projects then fails`() {
+        androidTesterHelper.writeAndroidProject(Type.GROOVY_SIMPLE)
+
+        val result = GradleRunner.create()
+            .withProjectDir(testProjectDir.root)
+            .withArguments("assemble")
+            .withPluginClasspath()
+            .buildAndFail()
+    }
+
+    @Disabled
+    @Test
+    fun `when double default config found then fail`() {
+        androidTesterHelper.writeAndroidProject(Type.GROOVY_BUILDSCRIPT_ANDROID)
+
+        val result = GradleRunner.create()
+            .withProjectDir(testProjectDir.root)
+//            .withArguments("assemble")  //requires SDK
+            .withArguments("androidDependencies", "--stacktrace", "--scan")
+//            .withPluginClasspath() // auto
+//            .withPluginClasspath(pluginClassPathFiles)
+            .withDebug(true)
+//            .withEnvironment(mapOf("ANDROID_SDK_ROOT" to "/Users/guido/Library/Android/sdk"))
+            .build()
+
     }
 
     @Disabled
@@ -61,40 +127,5 @@ internal class SmartPropertiesPluginFunctionalTest {
 
         assertTrue(result.output.contains("Hello world!"))
         assertEquals(TaskOutcome.SUCCESS, result.task(":helloWorld")?.outcome)
-    }
-
-    @Test
-    internal fun `functional test`() {
-        androidTesterHelper.writeAndroidProject(Type.GROOVY_BUILDSCRIPT_ANDROID)
-
-        val result = GradleRunner.create()
-            .withProjectDir(testProjectDir.root)
-//            .withArguments("assemble")  //requires SDK
-            .withArguments("androidDependencies", "--stacktrace", "--scan")
-//            .withPluginClasspath() // auto
-//            .withPluginClasspath(pluginClassPathFiles)
-            .withDebug(true)
-//            .withEnvironment(mapOf("ANDROID_SDK_ROOT" to "/Users/guido/Library/Android/sdk"))
-            .build()
-
-    }
-
-    @Test
-    internal fun `when not an android module then fail`() {
-
-    }
-
-    @Disabled
-    @Test
-    internal fun `can successfully configure URL through extension and verify it`() {
-        settingsFile.writeText("rootProject.name = 'hello-world'")
-
-        rootGradleFile.writeText("")
-
-        val result: BuildResult = GradleRunner.create()
-            .withProjectDir(testProjectDir.root)
-            .withArguments("helloWorld")
-            .build()
-
     }
 }
