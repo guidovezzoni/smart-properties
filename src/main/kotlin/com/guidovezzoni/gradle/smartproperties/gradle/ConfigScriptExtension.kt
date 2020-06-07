@@ -18,7 +18,7 @@ open class ConfigScriptExtension(private val project: Project) {
     @Suppress("unused")
     fun defaultConfig(defaultDef: Closure<*>): ConfigScriptBlock? {
         if (defaultConfig != null) {
-            throw IllegalArgumentException("Only one defaultConfig closure allowed")
+            throw IllegalArgumentException("Only one defaultConfig section allowed.")
         }
         defaultConfig = ConfigScriptBlock()
 

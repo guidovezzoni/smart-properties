@@ -5,5 +5,5 @@ import org.gradle.api.Project
 
 fun Project.getAndroid(): AppExtension {
     return this.extensions.findByName("android") as AppExtension?
-        ?: throw IllegalStateException("Not an Android application")
+        ?: throw IllegalStateException("Android plugin not found.")
 }

@@ -83,6 +83,8 @@ internal class SmartPropertiesPluginFunctionalTest {
             .withArguments("assemble")
             .withPluginClasspath()
             .buildAndFail()
+
+        assertTrue(result.output.contains("Android plugin not found."))
     }
 
     @Test
@@ -98,6 +100,7 @@ internal class SmartPropertiesPluginFunctionalTest {
             .withDebug(true)
             .buildAndFail()
 
+        assertTrue(result.output.contains("Only one defaultConfig section allowed."))
     }
 
     @Disabled
